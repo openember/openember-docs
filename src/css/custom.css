@@ -2,29 +2,36 @@
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
+ *
+ * OpenEmber 配色：与 logo 火焰暖色（红/橙/琥珀）保持一致
  */
 
-/* You can override the default Infima variables here. */
+/* ========== 白天模式：暖橙红主色（对应 logo 火焰中层～外层） ========== */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #c2410c;
+  --ifm-color-primary-dark: #a33609;
+  --ifm-color-primary-darker: #8b2e07;
+  --ifm-color-primary-darkest: #6d2406;
+  --ifm-color-primary-light: #d35400;
+  --ifm-color-primary-lighter: #e67e22;
+  --ifm-color-primary-lightest: #eb984e;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(194, 65, 12, 0.12);
+  /* 链接与强调色与主色统一 */
+  --ifm-link-color: #c2410c;
+  --ifm-link-hover-color: #a33609;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* ========== 黑夜模式：更亮的琥珀/橙，在深色背景上更易读 ========== */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #e67e22;
+  --ifm-color-primary-dark: #d35400;
+  --ifm-color-primary-darker: #c2410c;
+  --ifm-color-primary-darkest: #a33609;
+  --ifm-color-primary-light: #eb984e;
+  --ifm-color-primary-lighter: #f0b429;
+  --ifm-color-primary-lightest: #f5c942;
+  --docusaurus-highlighted-code-line-bg: rgba(230, 126, 34, 0.2);
+  --ifm-link-color: #eb984e;
+  --ifm-link-hover-color: #f0b429;
 }

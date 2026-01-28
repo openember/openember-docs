@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'OpenEmber',
   tagline: 'An Embedded Linux Distributed Application Framework',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -77,8 +77,8 @@ const config: Config = {
     navbar: {
       title: 'OpenEmber',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'OpenEmber Logo',
+        src: 'img/logo.png',
       },
       items: [
         {
@@ -89,7 +89,7 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/openember/openember',
           label: 'GitHub',
           position: 'right',
         },
@@ -133,12 +133,12 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/openember/openember',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} GeekAt, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
