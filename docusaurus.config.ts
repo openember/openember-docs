@@ -64,7 +64,9 @@ const config: Config = {
   themeConfig: {
     image: 'img/logo.png',
     colorMode: {
-      respectPrefersColorScheme: true,
+      defaultMode: 'dark', // 默认模式
+      disableSwitch: false, // 是否禁用切换器
+      respectPrefersColorScheme: false, // 忽略系统自动选择
     },
     navbar: {
       title: 'OpenEmber',
