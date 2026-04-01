@@ -1,0 +1,65 @@
+.heroBanner {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  /* 更高、更透气 */
+  padding: 4.5rem 1.5rem 2.5rem;
+  min-height: min(42vh, 420px);
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 3.5rem 1.25rem 3rem;
+    min-height: auto;
+  }
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  margin-bottom: 0;
+}
+
+.heroSubtitle {
+  margin-bottom: 0;
+  line-height: 1.65;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+/* 标题 + 按钮下方的点缀图标（叠在主题色背景之上） */
+.heroDecor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.75rem 2rem;
+  margin-top: 2.25rem;
+  padding-top: 0.5rem;
+  opacity: 0.55;
+}
+
+.decorIcon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.decorIcon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

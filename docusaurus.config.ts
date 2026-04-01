@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'OpenEmber',
-  tagline: '面向嵌入式 Linux 的分布式应用框架与轻量级运行时（EmberLite / OpenEmber）',
+  tagline: '面向嵌入式 Linux 的分布式应用框架与轻量级运行时（Runtime）',
   favicon: 'img/logo.png',
 
   future: {
@@ -64,7 +64,7 @@ const config: Config = {
   themeConfig: {
     image: 'img/logo.png',
     colorMode: {
-      defaultMode: 'dark', // 默认模式
+      //defaultMode: 'dark', // 默认模式
       disableSwitch: false, // 是否禁用切换器
       respectPrefersColorScheme: false, // 忽略系统自动选择
     },
@@ -153,7 +153,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} OpenEmber 项目贡献者。文档使用 Docusaurus 构建。`,
+      copyright: `Copyright © ${new Date().getFullYear()} OpenEmber Team. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
