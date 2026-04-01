@@ -1,19 +1,14 @@
-facebook:
-  label: Facebook
-  permalink: /facebook
-  description: Facebook tag description
+openember:
+  label: OpenEmber
+  permalink: /openember
+  description: OpenEmber 主框架与分布式运行时
 
-hello:
-  label: Hello
-  permalink: /hello
-  description: Hello tag description
+emberlite:
+  label: EmberLite
+  permalink: /emberlite
+  description: EmberLite 纯 C 轻量框架
 
-docusaurus:
-  label: Docusaurus
-  permalink: /docusaurus
-  description: Docusaurus tag description
-
-hola:
-  label: Hola
-  permalink: /hola
-  description: Hola tag description
+docs:
+  label: 文档
+  permalink: /docs
+  description: 文档站点与写作
