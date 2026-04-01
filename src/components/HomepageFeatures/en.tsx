@@ -5,14 +5,16 @@ import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  image: string;
+  imageAlt: string;
   description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
   {
     title: 'Distributed middleware runtime',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    image: require('@site/static/img/distributed-icon.png').default,
+    imageAlt: 'Distributed nodes and messaging',
     description: (
       <>
         OpenEmber targets robotics and smart devices with node lifecycles, pub/sub messaging,
@@ -22,7 +24,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Layered architecture & HAL',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    image: require('@site/static/img/middleware-icon.png').default,
+    imageAlt: 'Layered middleware stack',
     description: (
       <>
         Clear stack from apps down to modules, components, core, and platform—OS abstractions
@@ -32,7 +35,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'EmberLite & shared tooling',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    image: require('@site/static/img/build-tool-icon.png').default,
+    imageAlt: 'Build tooling',
     description: (
       <>
         EmberLite keeps a pure C runtime for tight footprints; both stacks share the{' '}
@@ -42,11 +46,16 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, image, imageAlt, description}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <img
+          className={styles.featureIcon}
+          src={image}
+          alt={imageAlt}
+          loading="lazy"
+        />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>

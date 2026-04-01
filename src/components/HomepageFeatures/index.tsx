@@ -5,14 +5,16 @@ import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  image: string;
+  imageAlt: string;
   description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
   {
     title: '分布式中间件运行时',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    image: require('@site/static/img/distributed-icon.png').default,
+    imageAlt: '分布式与节点通信',
     description: (
       <>
         OpenEmber 面向机器人与智能设备，提供节点生命周期、话题发布/订阅、参数与服务等机制，模块可分布在不同硬件上协同工作。
@@ -21,7 +23,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: '分层架构与 HAL',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    image: require('@site/static/img/middleware-icon.png').default,
+    imageAlt: '分层架构与中间件',
     description: (
       <>
         从应用到平台清晰分层：应用 → 模块 → 组件 → 核心 → 平台（OS 抽象与 UART、GPIO、I2C 等硬件抽象），便于裁剪与扩展。
@@ -30,7 +33,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'EmberLite 与统一工具链',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    image: require('@site/static/img/build-tool-icon.png').default,
+    imageAlt: '构建工具链',
     description: (
       <>
         纯 C 的 EmberLite 适合资源受限场景；OpenEmber 与 EmberLite 共用{' '}
@@ -40,11 +44,16 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, image, imageAlt, description}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <img
+          className={styles.featureIcon}
+          src={image}
+          alt={imageAlt}
+          loading="lazy"
+        />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
