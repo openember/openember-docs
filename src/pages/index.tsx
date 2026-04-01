@@ -21,7 +21,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Quick Start
+            快速开始
           </Link>
         </div>
       </div>
@@ -33,8 +33,8 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`${siteConfig.title} 文档`}
+      description="OpenEmber 与 EmberLite：面向嵌入式 Linux 的分布式应用框架与轻量级 C 运行时，统一 ember 工具链与 Kconfig + CMake 构建。">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

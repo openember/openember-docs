@@ -2,37 +2,32 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
-
 const config: Config = {
   title: 'OpenEmber',
-  tagline: 'An Embedded Linux Distributed Application Framework',
+  tagline: '面向嵌入式 Linux 的分布式应用框架与轻量级运行时（EmberLite / OpenEmber）',
   favicon: 'img/logo.png',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
-  // Set the production url of your site here
   url: 'https://openember.org',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'openember',
+  projectName: 'openember-docs',
 
   onBrokenLinks: 'throw',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'zh-Hans',
+    locales: ['zh-Hans'],
+    localeConfigs: {
+      'zh-Hans': {
+        label: '简体中文',
+        htmlLang: 'zh-Hans',
+      },
+    },
   },
 
   presets: [
@@ -41,10 +36,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/openember/openember-docs/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/openember/openember-docs/tree/main/',
         },
         blog: {
           showReadingTime: true,
@@ -52,11 +44,7 @@ const config: Config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/openember/openember-docs/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
+          editUrl: 'https://github.com/openember/openember-docs/tree/main/',
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -69,15 +57,14 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/logo.png',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
       title: 'OpenEmber',
       logo: {
-        alt: 'OpenEmber Logo',
+        alt: 'OpenEmber',
         src: 'img/logo.png',
       },
       items: [
@@ -85,9 +72,9 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: '文档',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/blog', label: '博客', position: 'left'},
         {
           href: 'https://github.com/openember/openember',
           label: 'GitHub',
@@ -99,46 +86,46 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: '文档',
           items: [
             {
-              label: 'Tutorial',
+              label: '文档首页',
               to: '/docs/intro',
             },
           ],
         },
         {
-          title: 'Community',
+          title: '仓库',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/openember',
+              label: 'OpenEmber',
+              href: 'https://github.com/openember/openember',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/openember',
+              label: 'EmberLite',
+              href: 'https://github.com/openember/emberlite',
             },
             {
-              label: 'X',
-              href: 'https://x.com/openember',
+              label: 'openember-cli',
+              href: 'https://github.com/openember/openember-cli',
+            },
+            {
+              label: 'openember-docs',
+              href: 'https://github.com/openember/openember-docs',
             },
           ],
         },
         {
-          title: 'More',
+          title: '更多',
           items: [
             {
-              label: 'Blog',
+              label: '博客',
               to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/openember/openember',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} GeekAt, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} OpenEmber 项目贡献者。文档使用 Docusaurus 构建。`,
     },
     prism: {
       theme: prismThemes.github,
