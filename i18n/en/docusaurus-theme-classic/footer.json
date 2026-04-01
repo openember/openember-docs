@@ -1,0 +1,58 @@
+{
+  "link.title.文档": {
+    "message": "Docs",
+    "description": "The title of the footer links column with title=文档 in the footer"
+  },
+  "link.title.仓库": {
+    "message": "Repositories",
+    "description": "The title of the footer links column with title=仓库 in the footer"
+  },
+  "link.title.更多": {
+    "message": "More",
+    "description": "The title of the footer links column with title=更多 in the footer"
+  },
+  "link.item.label.简介": {
+    "message": "Introduction",
+    "description": "The label of footer link with label=简介 linking to /docs/intro"
+  },
+  "link.item.label.架构概览": {
+    "message": "Architecture overview",
+    "description": "The label of footer link with label=架构概览 linking to /docs/architecture-overview"
+  },
+  "link.item.label.构建 OpenEmber": {
+    "message": "Build OpenEmber",
+    "description": "The label of footer link with label=构建 OpenEmber linking to /docs/build-openember"
+  },
+  "link.item.label.构建 EmberLite": {
+    "message": "Build EmberLite",
+    "description": "The label of footer link with label=构建 EmberLite linking to /docs/build-emberlite"
+  },
+  "link.item.label.ember CLI": {
+    "message": "ember CLI",
+    "description": "The label of footer link with label=ember CLI linking to /docs/cli-ember"
+  },
+  "link.item.label.OpenEmber": {
+    "message": "OpenEmber",
+    "description": "The label of footer link with label=OpenEmber linking to https://github.com/openember/openember"
+  },
+  "link.item.label.EmberLite": {
+    "message": "EmberLite",
+    "description": "The label of footer link with label=EmberLite linking to https://github.com/openember/emberlite"
+  },
+  "link.item.label.openember-cli": {
+    "message": "openember-cli",
+    "description": "The label of footer link with label=openember-cli linking to https://github.com/openember/openember-cli"
+  },
+  "link.item.label.openember-docs": {
+    "message": "openember-docs",
+    "description": "The label of footer link with label=openember-docs linking to https://github.com/openember/openember-docs"
+  },
+  "link.item.label.博客": {
+    "message": "Blog",
+    "description": "The label of footer link with label=博客 linking to /blog"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 OpenEmber contributors. Built with Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

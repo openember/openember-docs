@@ -21,11 +21,16 @@ const config: Config = {
 
   i18n: {
     defaultLocale: 'zh-Hans',
-    locales: ['zh-Hans'],
+    locales: ['zh-Hans', 'en'],
     localeConfigs: {
       'zh-Hans': {
         label: '简体中文',
         htmlLang: 'zh-Hans',
+      },
+      en: {
+        label: 'English',
+        htmlLang: 'en',
+        direction: 'ltr',
       },
     },
   },
@@ -79,6 +84,10 @@ const config: Config = {
         {
           href: 'https://github.com/openember/openember',
           label: 'GitHub',
+          position: 'right',
+        },
+        {
+          type: 'localeDropdown',
           position: 'right',
         },
       ],
