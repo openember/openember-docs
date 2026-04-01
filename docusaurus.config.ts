@@ -73,6 +73,7 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: '文档',
+          docId: 'intro',
         },
         {to: '/blog', label: '博客', position: 'left'},
         {
@@ -89,8 +90,24 @@ const config: Config = {
           title: '文档',
           items: [
             {
-              label: '文档首页',
+              label: '简介',
               to: '/docs/intro',
+            },
+            {
+              label: '架构概览',
+              to: '/docs/architecture-overview',
+            },
+            {
+              label: '构建 OpenEmber',
+              to: '/docs/build-openember',
+            },
+            {
+              label: '构建 EmberLite',
+              to: '/docs/build-emberlite',
+            },
+            {
+              label: 'ember CLI',
+              to: '/docs/cli-ember',
             },
           ],
         },
