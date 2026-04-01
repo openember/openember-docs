@@ -1,11 +1,13 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  image: string;
+  /** Path under `static/`, e.g. `/img/foo.png` (see Docusaurus static assets). */
+  imageUrl: string;
   imageAlt: string;
   description: ReactNode;
 };
@@ -13,7 +15,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: '分布式中间件运行时',
-    image: require('@site/static/img/distributed-icon.png').default,
+    imageUrl: '/img/distributed-icon.png',
     imageAlt: '分布式与节点通信',
     description: (
       <>
@@ -23,7 +25,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: '分层架构与 HAL',
-    image: require('@site/static/img/middleware-icon.png').default,
+    imageUrl: '/img/middleware-icon.png',
     imageAlt: '分层架构与中间件',
     description: (
       <>
@@ -33,7 +35,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'EmberLite 与统一工具链',
-    image: require('@site/static/img/build-tool-icon.png').default,
+    imageUrl: '/img/build-tool-icon.png',
     imageAlt: '构建工具链',
     description: (
       <>
@@ -44,15 +46,17 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, image, imageAlt, description}: FeatureItem) {
+function Feature({title, imageUrl, imageAlt, description}: FeatureItem) {
+  const src = useBaseUrl(imageUrl);
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
         <img
           className={styles.featureIcon}
-          src={image}
+          src={src}
           alt={imageAlt}
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div className="text--center padding-horiz--md">

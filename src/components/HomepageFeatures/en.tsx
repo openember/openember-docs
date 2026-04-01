@@ -1,11 +1,12 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  image: string;
+  imageUrl: string;
   imageAlt: string;
   description: ReactNode;
 };
@@ -13,7 +14,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: 'Distributed middleware runtime',
-    image: require('@site/static/img/distributed-icon.png').default,
+    imageUrl: '/img/distributed-icon.png',
     imageAlt: 'Distributed nodes and messaging',
     description: (
       <>
@@ -24,7 +25,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Layered architecture & HAL',
-    image: require('@site/static/img/middleware-icon.png').default,
+    imageUrl: '/img/middleware-icon.png',
     imageAlt: 'Layered middleware stack',
     description: (
       <>
@@ -35,7 +36,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'EmberLite & shared tooling',
-    image: require('@site/static/img/build-tool-icon.png').default,
+    imageUrl: '/img/build-tool-icon.png',
     imageAlt: 'Build tooling',
     description: (
       <>
@@ -46,15 +47,17 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, image, imageAlt, description}: FeatureItem) {
+function Feature({title, imageUrl, imageAlt, description}: FeatureItem) {
+  const src = useBaseUrl(imageUrl);
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
         <img
           className={styles.featureIcon}
-          src={image}
+          src={src}
           alt={imageAlt}
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div className="text--center padding-horiz--md">
