@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import Layout from '@theme/Layout';
 import HomepageFeaturesEn from '@site/src/components/HomepageFeatures/en';
+import {HomepageContact} from '@site/src/components/HomepageContact';
 import {HomepageHero} from '@site/src/components/HomepageHero';
 
 export default function Home(): ReactNode {
@@ -16,6 +17,12 @@ export default function Home(): ReactNode {
       />
       <main>
         <HomepageFeaturesEn />
+        <HomepageContact
+          heading="Contact"
+          lead="OpenEmber is under active development. Curious about the project or have questions? I'd be glad to hear from you."
+          wechatLabel="WeChat"
+          wechatId="Archimedong"
+        />
       </main>
     </Layout>
   );

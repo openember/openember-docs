@@ -2,6 +2,7 @@ import type {ReactNode} from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import {HomepageContact} from '@site/src/components/HomepageContact';
 import {HomepageHero} from '@site/src/components/HomepageHero';
 
 export default function Home(): ReactNode {
@@ -18,6 +19,12 @@ export default function Home(): ReactNode {
       />
       <main>
         <HomepageFeatures />
+        <HomepageContact
+          heading="联系我们"
+          lead="项目正在持续开发中。如果你对 OpenEmber 感兴趣，或者有任何疑问，欢迎联系我～"
+          wechatLabel="微信："
+          wechatId="Archimedong"
+        />
       </main>
     </Layout>
   );
