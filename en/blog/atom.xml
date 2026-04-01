@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://openember.org/en/blog</id>
+    <title>OpenEmber Blog</title>
+    <updated>2026-04-01T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://openember.org/en/blog"/>
+    <subtitle>OpenEmber Blog</subtitle>
+    <icon>https://openember.org/en/img/logo.png</icon>
+    <entry>
+        <title type="html"><![CDATA[Welcome to the OpenEmber documentation site]]></title>
+        <id>https://openember.org/en/blog/openember-docs-site</id>
+        <link href="https://openember.org/en/blog/openember-docs-site"/>
+        <updated>2026-04-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This site is built with Docusaurus and explains what OpenEmber and EmberLite are, how the architecture is layered, how to build each repository, and how the ember CLI fits in.]]></summary>
+        <content type="html"><![CDATA[<p>This site is built with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer" class="">Docusaurus</a> and explains what <strong>OpenEmber</strong> and <strong>EmberLite</strong> are, how the architecture is layered, how to build each repository, and how the <strong><code>ember</code></strong> CLI fits in.</p>
+<p>Under <strong>Docs</strong> you will find:</p>
+<ul>
+<li class="">How OpenEmber relates to EmberLite</li>
+<li class="">A high-level architecture overview</li>
+<li class="">Build instructions for the main tree and EmberLite</li>
+<li class="">Common <code>ember</code> commands and environment management (<code>add</code> / <code>use</code> / <code>list</code>)</li>
+</ul>
+<p>The ecosystem is evolving quickly—if you spot gaps or want new topics, please open an issue or PR on <a href="https://github.com/openember/openember-docs" target="_blank" rel="noopener noreferrer" class="">openember-docs</a>.</p>]]></content>
+        <author>
+            <name>Lu Huadong</name>
+            <uri>https://linkedin.com/in/luhuadong</uri>
+        </author>
+        <category label="OpenEmber" term="OpenEmber"/>
+        <category label="EmberLite" term="EmberLite"/>
+        <category label="文档" term="文档"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Why EmberLite?]]></title>
+        <id>https://openember.org/en/blog/why-emberlite</id>
+        <link href="https://openember.org/en/blog/why-emberlite"/>
+        <updated>2026-04-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Even with OpenEmber (C++-first), we still need EmberLite in pure C: industrial, medical, and aerospace projects often prioritize determinism, static memory, and certifiability over language features. C keeps call graphs and resource usage easier to reason about and aligns well with MISRA-style rules.]]></summary>
+        <content type="html"><![CDATA[<p>Even with OpenEmber (C++-first), we still need <strong>EmberLite</strong> in <strong>pure C</strong>: industrial, medical, and aerospace projects often prioritize <strong>determinism</strong>, <strong>static memory</strong>, and <strong>certifiability</strong> over language features. C keeps call graphs and resource usage easier to reason about and aligns well with MISRA-style rules.</p>
+<p>EmberLite is not meant to replace ROS2 or OpenEmber—it gives resource-constrained embedded Linux devices a lightweight node model and pub/sub messaging while staying on the same <strong>Kconfig + CMake</strong> and <strong><code>ember</code> CLI</strong> workflow, so teams can switch repos without relearning tooling.</p>
+<p>Read more in the <a class="" href="https://openember.org/en/docs/intro">Introduction</a>.</p>]]></content>
+        <author>
+            <name>Lu Huadong</name>
+            <uri>https://linkedin.com/in/luhuadong</uri>
+        </author>
+        <category label="EmberLite" term="EmberLite"/>
+        <category label="OpenEmber" term="OpenEmber"/>
+    </entry>
+</feed>

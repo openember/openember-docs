@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkopenember_docs=globalThis.webpackChunkopenember_docs||[]).push([[782],{6004(e){e.exports=JSON.parse('{"metadata":{"permalink":"/en/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"News and notes from the OpenEmber project","blogTitle":"Blog"}}')}}]);
