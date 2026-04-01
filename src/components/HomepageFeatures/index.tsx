@@ -1,13 +1,11 @@
 import type {ReactNode} from 'react';
-import clsx from 'clsx';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import Heading from '@theme/Heading';
+import {FeatureCard} from './FeatureCard';
+import {homepageFeatureIconPath} from './featureIcons';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  /** Path under `static/`, e.g. `/img/foo.png` (see Docusaurus static assets). */
-  imageUrl: string;
+  imagePath: string;
   imageAlt: string;
   description: ReactNode;
 };
@@ -15,7 +13,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: '分布式中间件运行时',
-    imageUrl: '/img/distributed-icon.png',
+    imagePath: homepageFeatureIconPath.distributed,
     imageAlt: '分布式与节点通信',
     description: (
       <>
@@ -25,7 +23,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: '分层架构与 HAL',
-    imageUrl: '/img/middleware-icon.png',
+    imagePath: homepageFeatureIconPath.middleware,
     imageAlt: '分层架构与中间件',
     description: (
       <>
@@ -35,7 +33,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'EmberLite 与统一工具链',
-    imageUrl: '/img/build-tool-icon.png',
+    imagePath: homepageFeatureIconPath.buildTool,
     imageAlt: '构建工具链',
     description: (
       <>
@@ -46,34 +44,13 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, imageUrl, imageAlt, description}: FeatureItem) {
-  const src = useBaseUrl(imageUrl);
-  return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <img
-          className={styles.featureIcon}
-          src={src}
-          alt={imageAlt}
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
-}
-
 export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
         <div className="row">
           {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+            <FeatureCard key={idx} {...props} />
           ))}
         </div>
       </div>
