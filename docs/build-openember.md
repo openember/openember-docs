@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # 构建 OpenEmber
 
-OpenEmber 使用 **Kconfig** 生成 `build/.config`，再经脚本生成 **`build/config.cmake`**，由 **CMake** 读取并完成编译。推荐在 **Linux** 上使用 **GCC/G++**，CMake 版本需满足仓库要求（当前最小版本以仓库 `CMakeLists.txt` 为准）。
+OpenEmber 使用 **Kconfig** 生成 `build/.config`，再经脚本生成 `build/config.cmake`，由 **CMake** 读取并完成编译。推荐在 Linux 上使用 GCC/G++，CMake 版本需满足仓库要求（当前最小版本以仓库 `CMakeLists.txt` 为准）。
 
 ## 前置条件
 
@@ -13,7 +13,11 @@ OpenEmber 使用 **Kconfig** 生成 `build/.config`，再经脚本生成 **`buil
 - 编译器与基础构建工具  
 - 可选：`sudo apt install libssl-dev`（部分依赖需要）
 
+:::tip
+
 Kconfig 工具链使用 **kconfig-frontends**；工程脚本可自动下载 **kconfig-frontends-nox** 到仓库本地目录（如 `.kconfig-frontends/`），无需 root 安装。
+
+:::
 
 ## 推荐流程（脚本 + ember）
 
