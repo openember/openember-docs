@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# ember CLI
+# ember CLI tool
 
 The `ember` command comes from **openember-cli**. It orchestrates **Kconfig** and **CMake** only; each target project must ship `CMakeLists.txt` and `scripts/kconfig/menuconfig.sh` / `genconfig.sh` at the expected paths.
 

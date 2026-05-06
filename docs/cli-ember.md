@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# ember CLI
+# ember CLI 命令行工具
 
 `ember` 来自 **openember-cli** 仓库，用于编排 **Kconfig** 与 **CMake**，本身不绑定某一业务工程；具体工程需在根目录提供 `CMakeLists.txt` 以及 `scripts/kconfig/menuconfig.sh`、`scripts/kconfig/genconfig.sh` 等约定入口。
 

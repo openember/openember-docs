@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# 架构概览
+# OpenEmber 架构概览
 
 OpenEmber 采用清晰的**五层**模型（依赖自上而下），便于扩展与长期维护：
 
