@@ -35,6 +35,7 @@ sidebar_position: 1
 |------|------|
 | [openember](https://github.com/openember/openember) | 主框架（C++ 核心 + 模块与示例） |
 | [emberlite](https://github.com/openember/emberlite) | 纯 C 轻量框架与 HAL 示例 |
+| [openember-msgs](https://github.com/openember/openember-msgs) | OpenEmber 与 EmberLite 共用的 Protobuf 消息协议 |
 | [openember-cli](https://github.com/openember/openember-cli) | `ember` CLI 与 Bash 补全 |
 | [openember-docs](https://github.com/openember/openember-docs) | 本站文档源码 |
 
