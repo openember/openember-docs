@@ -11,6 +11,7 @@ EmberLite 使用 **CMake**（建议 ≥ 3.16），并可选与 OpenEmber 一致�
 - Linux（POSIX）  
 - CMake ≥ 3.16  
 - GCC 或 Clang（支持 C11）
+- 可选：`protoc`、Nanopb、Python protobuf（启用 `openember-msgs` 时需要）
 
 ## 推荐：`ember` 一键构建
 
@@ -48,6 +49,45 @@ cmake --build build -j
 
 - 可执行文件：`build/bin/`  
 - 库：`build/lib/`  
+
+## 可选：启用 openember-msgs
+
+EmberLite 默认不启用消息协议绑定。需要与 OpenEmber 共用 `openember-msgs` 消息定义时，启用 `OPENEMBER_ENABLE_MSGS=ON`：
+
+```bash
+cmake -S . -B build -DOPENEMBER_ENABLE_MSGS=ON
+cmake --build build --target emberlite_msgs -j
+```
+
+推荐本地开发目录结构：
+
+```text
+Projects/OpenEmber/
+├── emberlite/
+└── openember-msgs/
+```
+
+如果 `openember-msgs` 不在同级目录，可以显式指定：
+
+```bash
+cmake -S . -B build \
+  -DOPENEMBER_ENABLE_MSGS=ON \
+  -DOPENEMBER_MSGS_LOCAL_SOURCE=/path/to/openember-msgs
+```
+
+启用后构建环境需要：
+
+- `protoc` 在 `PATH` 中可用。
+- Nanopb 源码，可由 third-party 缓存获取，也可通过 `OPENEMBER_NANOPB_LOCAL_SOURCE=/path/to/nanopb` 指定。
+- 一个能 `import google.protobuf` 的 Python。CMake 会自动尝试常见 `python3` 路径；必要时可设置 `OPENEMBER_PROTOBUF_PYTHON=/path/to/python3`。
+
+常见 Debian/Ubuntu 依赖：
+
+```bash
+sudo apt install protobuf-compiler python3-protobuf
+```
+
+更多协议设计与 Nanopb 约束策略见 [openember-msgs 消息协议](./openember-msgs.md)。
 
 ## 示例：串口终端
 

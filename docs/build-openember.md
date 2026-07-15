@@ -11,6 +11,7 @@ OpenEmber 使用 **Kconfig** 生成 `build/.config`，再经脚本生成 `build/
 - Linux  
 - CMake（参见主仓库声明）  
 - 编译器与基础构建工具  
+- `protoc` 与 Protobuf C++ 开发库（默认启用 `openember-msgs`）
 - 可选：`sudo apt install libssl-dev`（部分依赖需要）
 
 :::tip
@@ -41,6 +42,39 @@ cmake --build build -j"$(nproc)"
 说明：
 
 - 顶层 `CMakeLists.txt` 会 `include` 构建目录下的 `config.cmake`（若存在），以 Kconfig 为主驱动选项。
+
+## 消息协议依赖
+
+OpenEmber 默认启用 `OPENEMBER_WITH_MSGS=ON`，构建时会生成并链接 `openember-msgs` 的 C++ Protobuf 绑定。
+
+推荐本地开发目录结构：
+
+```text
+Projects/OpenEmber/
+├── openember/
+└── openember-msgs/
+```
+
+如果 `openember-msgs` 不在同级目录，可以显式指定：
+
+```bash
+cmake -S . -B build \
+  -DOPENEMBER_MSGS_LOCAL_SOURCE=/path/to/openember-msgs
+```
+
+若当前构建暂时不需要协议绑定，可以关闭：
+
+```bash
+cmake -S . -B build -DOPENEMBER_WITH_MSGS=OFF
+```
+
+常见 Debian/Ubuntu 依赖：
+
+```bash
+sudo apt install protobuf-compiler libprotobuf-dev
+```
+
+更多协议设计与 OpenEmber / EmberLite 共用方式见 [openember-msgs 消息协议](./openember-msgs.md)。
 
 ### 使用 Makefile 包装
 
