@@ -36,6 +36,6 @@ platform
 
 - **可扩展**：插件化模块与 Kconfig 裁剪，适配不同产品与算力。  
 - **依赖管理**：`OPENEMBER_THIRD_PARTY_MODE` 等选项支持 FETCH / VENDOR / SYSTEM，兼顾离线与企业构建。  
-- **通信抽象**：发布-订阅等 API 稳定，底层可切换 NNG、LCM、ZeroMQ 等实现（以项目配置为准）。
+- **通信抽象**：OpenEmber Link 提供稳定的 Topic、Service、Liveliness 和消息编解码语义，底层传输实现对应用隐藏。
 
-更完整的分层说明与规范见上游仓库中的 [架构设计文档](https://github.com/openember/openember/blob/main/docs/architecture/layered-architecture-design-guide.md)。
+更完整的分层说明与规范见上游仓库中的 [架构设计文档](https://github.com/openember/openember/blob/main/docs/architecture/layered-architecture-design-guide.md)，通信层设计见 [OpenEmber Link 通信层](./openember-link.md)。

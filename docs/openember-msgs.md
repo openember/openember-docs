@@ -28,20 +28,34 @@ sidebar_position: 5
 | `device/v1` | 设备信息、设备状态、设备查询 |
 | `runtime/v1` | 进程启动、停止和进程事件 |
 
-OpenEmber 已接入 `openember-msgs` 的 C++ Protobuf 生成目标，默认通过 `FETCH` 拉取 `main` archive，也可显式选择 `LOCAL` 使用本地 checkout。EmberLite 已接入 Nanopb C 生成目标。两个工程统一通过 `OPENEMBER_ENABLE_MSGS` 管理消息协议是否启用。
+OpenEmber 已接入 `openember-msgs` 的 C++ Protobuf 生成目标，默认通过 `FETCH` 拉取 `main` archive，也可显式选择 `LOCAL` 使用本地 checkout。EmberLite 已接入 Nanopb C 生成目标。两个工程都通过 `OPENEMBER_ENABLE_MSGS` 管理消息协议是否启用。
 
 ## Kconfig 管理方案
 
-消息协议是 OpenEmber 生态的一等通信契约，影响节点、工具、设备管理、诊断、参数和运行时服务。它不应归入 `Core`、`Component` 或纯 `Third party` 菜单，而应作为独立顶层菜单管理：
+消息协议是 OpenEmber 生态的一等通信契约，影响节点、工具、设备管理、诊断、参数和运行时服务。它不应归入 `Core`、`Component` 或纯 `Third party` 菜单，而应放在通信层统一管理：
 
 ```text
-Protocol / Messages
+Communication / Messages
 ```
 
-推荐两个工程都采用相同语义：
+OpenEmber 当前采用如下结构；EmberLite 后续也可以对齐同一语义：
 
 ```kconfig
-menu "Protocol / Messages"
+menu "Communication"
+
+menu "Link"
+
+config OPENEMBER_ENABLE_LINK
+    bool "Enable OpenEmber Link"
+    default y
+    depends on OPENEMBER_COMPONENT_TRANSPORT
+    help
+      Build the stable OpenEmber communication layer for Topic, Service,
+      Liveliness, node discovery, diagnostics, and message serialization.
+
+endmenu
+
+menu "Messages"
 
 config OPENEMBER_ENABLE_MSGS
     bool "Enable openember-msgs protocol bindings"
@@ -82,6 +96,8 @@ config OPENEMBER_MSGS_REF_LATEST
     bool "latest"
 
 endchoice
+
+endmenu
 
 endmenu
 ```
@@ -128,7 +144,8 @@ config OPENEMBER_TP_LINK_NANOPB
 
 这样菜单职责保持清晰：
 
-- `Protocol / Messages`：是否启用协议绑定、选择 `openember-msgs` 版本。
+- `Communication / Link`：是否启用 OpenEmber Link 通信层。
+- `Communication / Messages`：是否启用协议绑定、选择 `openember-msgs` 版本。
 - `Third party`：源码下载、缓存、vendor archive、系统包等获取策略。
 - `Core` / `Component`：只表达运行时库和功能模块，不承载协议版本选择。
 
