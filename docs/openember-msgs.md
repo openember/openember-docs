@@ -193,6 +193,8 @@ build/generated/openember-msgs
 
 当前实现不会因为 FETCH / LOCAL 切换而主动删除该目录，而是依赖 CMake custom command 的依赖关系触发重新生成。通常这已经足够；后续如果需要更强的一致性，可以增加 source stamp 机制：记录当前使用的协议来源，例如 `FETCH:main` 或 `LOCAL:/abs/path/to/openember-msgs`，当来源变化时主动删除 `build/generated/openember-msgs` 并重新生成。
 
+后续如果其他依赖也需要类似 `FETCH` / `LOCAL` 的显式来源选择，可以再抽象一层通用 source resolver。它可以统一处理来源校验、绝对路径检查、archive 缓存、`build/_deps` 暂存目录、marker 文件校验和可选的切换清理策略。现阶段只有 `openember-msgs` 明确需要这套语义，因此暂不提前抽象，避免为单一用例引入过重的公共接口。
+
 ## OpenEmber 中的使用流程
 
 OpenEmber 是 C++ 主线，推荐使用标准 Protobuf C++ runtime。
