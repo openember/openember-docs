@@ -34,6 +34,8 @@ platform
 
 上层可依赖下层，避免反向依赖，便于单独测试与替换实现（例如更换传输后端或 HAL 后端）。
 
+组件层常用能力包括日志、[Algorithm](./openember-algorithm.md)、[Thread Pool](./openember-thread-pool.md) 等；通信层见 [OpenEmber Link](./openember-link.md)。
+
 ## 设计思想（摘要）
 
 - **可扩展**：插件化模块与 Kconfig 裁剪，适配不同产品与算力。  
