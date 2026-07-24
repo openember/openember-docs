@@ -45,7 +45,9 @@ cmake --build build -j"$(nproc)"
 
 ## 消息协议依赖
 
-OpenEmber 默认启用 `OPENEMBER_WITH_MSGS=ON`，构建时会生成并链接 `openember-msgs` 的 C++ Protobuf 绑定。
+OpenEmber 默认启用 `OPENEMBER_ENABLE_MSGS=ON`，构建时会生成并链接 `openember-msgs` 的 C++ Protobuf 绑定。Kconfig 中该配置位于顶层 `Protocol / Messages` 菜单。
+
+生成产物位于构建目录的 `generated/openember/msgs/` 下，包含 `*.pb.h` 和 `*.pb.cc`。这些 `*.pb.cc` 会被编译为 `openember_msgs_cpp` 静态库，并通过 `openember::msgs_cpp` target 链接到 OpenEmber 中。
 
 推荐本地开发目录结构：
 
@@ -59,13 +61,16 @@ Projects/OpenEmber/
 
 ```bash
 cmake -S . -B build \
+  -DOPENEMBER_MSGS_SOURCE=LOCAL \
   -DOPENEMBER_MSGS_LOCAL_SOURCE=/path/to/openember-msgs
 ```
+
+默认配置为 `OPENEMBER_MSGS_SOURCE=FETCH`，会在配置阶段拉取 `openember-msgs` 的 `latest`（当前映射为 `main` 分支）archive。工程不会自动使用相邻的 `../openember-msgs`，除非显式选择 `LOCAL`。
 
 若当前构建暂时不需要协议绑定，可以关闭：
 
 ```bash
-cmake -S . -B build -DOPENEMBER_WITH_MSGS=OFF
+cmake -S . -B build -DOPENEMBER_ENABLE_MSGS=OFF
 ```
 
 常见 Debian/Ubuntu 依赖：

@@ -11,7 +11,7 @@ EmberLite 使用 **CMake**（建议 ≥ 3.16），并可选与 OpenEmber 一致�
 - Linux（POSIX）  
 - CMake ≥ 3.16  
 - GCC 或 Clang（支持 C11）
-- 可选：`protoc`、Nanopb、Python protobuf（启用 `openember-msgs` 时需要）
+- `protoc`、Nanopb、Python protobuf（默认启用 `openember-msgs`；关闭消息协议后可省略）
 
 ## 推荐：`ember` 一键构建
 
@@ -50,14 +50,16 @@ cmake --build build -j
 - 可执行文件：`build/bin/`  
 - 库：`build/lib/`  
 
-## 可选：启用 openember-msgs
+## 消息协议依赖
 
-EmberLite 默认不启用消息协议绑定。需要与 OpenEmber 共用 `openember-msgs` 消息定义时，启用 `OPENEMBER_ENABLE_MSGS=ON`：
+EmberLite 默认启用 `OPENEMBER_ENABLE_MSGS=ON`，Kconfig 中该配置位于顶层 `Protocol / Messages` 菜单。启用后会与 OpenEmber 共用 `openember-msgs` 消息定义，并生成 Nanopb C 绑定：
 
 ```bash
 cmake -S . -B build -DOPENEMBER_ENABLE_MSGS=ON
 cmake --build build --target emberlite_msgs -j
 ```
+
+生成产物位于构建目录的 `generated/openember/msgs/` 下，包含 `*.pb.h` 和 `*.pb.c`。这些 `*.pb.c` 会被编译为 `emberlite_msgs` 静态库，供 EmberLite runtime、通信适配层或示例节点链接使用。
 
 推荐本地开发目录结构：
 
@@ -72,7 +74,16 @@ Projects/OpenEmber/
 ```bash
 cmake -S . -B build \
   -DOPENEMBER_ENABLE_MSGS=ON \
+  -DOPENEMBER_MSGS_SOURCE=LOCAL \
   -DOPENEMBER_MSGS_LOCAL_SOURCE=/path/to/openember-msgs
+```
+
+默认配置为 `OPENEMBER_MSGS_SOURCE=FETCH`，会在配置阶段拉取 `openember-msgs` 的 `latest`（当前映射为 `main` 分支）archive。工程不会自动使用相邻的 `../openember-msgs`，除非显式选择 `LOCAL`。
+
+若当前构建暂时不需要消息协议绑定，可以关闭：
+
+```bash
+cmake -S . -B build -DOPENEMBER_ENABLE_MSGS=OFF
 ```
 
 启用后构建环境需要：
