@@ -6,18 +6,20 @@ sidebar_position: 2
 
 OpenEmber 采用清晰的**五层**模型（依赖自上而下），便于扩展与长期维护：
 
-1. **Application Layer** — 应用、启动脚本、示例与工具  
+1. **Application Layer** — 产品或用户项目应用入口
 2. **Module Layer** — 插件式功能扩展（传输后端、驱动、桥接、应用模块等）
 3. **Component Layer** — 跨模块复用组件（日志、算法、序列化、容器、配置解析等）
 4. **Core Layer** — 中间件运行时（节点生命周期、调度、话题、参数、服务等）  
 5. **Platform Layer** — 操作系统抽象与 **HAL**（线程、定时器、socket、UART、GPIO、I2C 等）
 
-目录上大致对应 `openember` 仓库中的 `apps/`、`modules/`、`components/`、`core/`、`platform/` 等（另含 `third_party/`、`configs/`、`tools/` 等工程辅助目录）。
+目录上大致对应 `openember` 仓库中的 `apps/`、`system/`、`services/`、`examples/`、`modules/`、`components/`、`core/`、`platform/` 等（另含 `third_party/`、`configs/`、`tools/` 等工程辅助目录）。
 
 ## 依赖方向
 
 ```
 apps
+  ↓
+system / services / examples
   ↓
 modules
   ↓
