@@ -6,18 +6,28 @@ sidebar_position: 2
 
 OpenEmber uses a **five-layer** model (dependencies flow downward):
 
-1. **Application layer** — apps, launches, demos, tools  
-2. **Module layer** — pluggable features (transports, drivers, algorithms, bridges)  
-3. **Component layer** — shared building blocks (logging, serialization, containers, config, …)  
-4. **Core layer** — middleware runtime (node lifecycle, scheduling, topics, parameters, services)  
+1. **Application layer** — executable entrypoints and orchestration (product apps, system nodes, optional services, examples, tools)
+2. **Module layer** — pluggable features (transports, drivers, bridges, application modules, …)
+3. **Component layer** — shared building blocks (logging, algorithms, serialization, containers, config, …)
+4. **Core layer** — middleware runtime (node lifecycle, scheduling, topics, parameters, services, …)
 5. **Platform layer** — OS abstraction and **HAL** (threads, timers, sockets, UART, GPIO, I2C, …)
 
-In the `openember` tree this maps roughly to `apps/`, `modules/`, `components/`, `core/`, `platform/`, plus helper dirs such as `third_party/`, `configs/`, `tools/`.
+Application is one logical layer. In the repo it is split by role into several top-level directories—not extra architecture layers:
+
+| Directory | Role |
+|-----------|------|
+| `apps/` | Product or user-project entrypoints (framework-owned nodes do not live here) |
+| `system/` | Built-in, mostly essential system nodes |
+| `services/` | Optional runtime services |
+| `examples/` | Samples and reference implementations |
+| `tools/` | Dev, debug, and ops utilities |
+
+Lower layers map roughly to `modules/`, `components/`, `core/`, and `platform/`. Helper dirs such as `third_party/` and `configs/` sit outside the five-layer stack.
 
 ## Dependency direction
 
 ```
-apps
+Application (apps / system / services / examples / tools)
   ↓
 modules
   ↓
@@ -32,10 +42,12 @@ Operating system (Linux, …)
 
 Upper layers depend on lower layers, not the reverse—making tests and backend swaps (e.g. transport or HAL) easier.
 
+Component-layer building blocks include [Logging](./openember-logging.md), [Algorithm](./openember-algorithm.md), and [Thread Pool](./openember-thread-pool.md); see [OpenEmber Link](./openember-link.md) for the communication layer.
+
 ## Design goals (summary)
 
-- **Extensible**: plugin-style modules and Kconfig trimming for different products.  
-- **Dependency management**: options such as `OPENEMBER_THIRD_PARTY_MODE` (FETCH / VENDOR / SYSTEM) for CI and offline builds.  
-- **Stable APIs**: pub/sub style interfaces with swappable implementations (NNG, LCM, ZeroMQ, …) depending on project configuration.
+- **Extensible**: plugin-style modules and Kconfig trimming for different products.
+- **Dependency management**: options such as `OPENEMBER_THIRD_PARTY_MODE` (FETCH / VENDOR / SYSTEM) for CI and offline builds.
+- **Communication abstraction**: OpenEmber Link exposes stable Topic, Service, Liveliness, and codec semantics while hiding the transport backend.
 
-For the full layered specification, see the upstream [design guide](https://github.com/openember/openember/blob/main/docs/architecture/layered-architecture-design-guide.md).
+For the full layered specification, see the upstream [layered design guide](https://github.com/openember/openember/blob/main/docs/architecture/layered-architecture-design-guide.md) and [Application layer design guide](https://github.com/openember/openember/blob/main/docs/architecture/application-layer-design-guide.md); for communication, see [OpenEmber Link](./openember-link.md).
