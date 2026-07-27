@@ -33,7 +33,15 @@ sidebar_position: 7
 components/thread_pool/include/openember/thread_pool/thread_pool.hpp
 ```
 
-CMake 目标：`openember_thread_pool`（通常已通过框架内部库列表链接）。
+CMake 目标：`openember_thread_pool`。
+
+Kconfig（Component → Thread Pool）：
+
+```
+OPENEMBER_COMPONENT_THREAD_POOL=y   # 默认开启
+```
+
+开启后由 `genconfig` 写入 `OPENEMBER_COMPONENT_THREAD_POOL`，并加入框架内部库列表。
 
 主要 API：
 
