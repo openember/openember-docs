@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">OpenEmber Logging | OpenEmber</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://openember.org/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://openember.org/img/logo.png"><meta data-rh="true" property="og:url" content="https://openember.org/docs/openember-logging"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="OpenEmber Logging | OpenEmber"><meta data-rh="true" name="description" content="components/logging 是 OpenEmber 的进程内日志组件。C++ 主线 API 为 openember::Logger；业务代码继续使用 LOG / OE_LOG 宏。"><meta data-rh="true" property="og:description" content="components/logging 是 OpenEmber 的进程内日志组件。C++ 主线 API 为 openember::Logger；业务代码继续使用 LOG / OE_LOG 宏。"><link data-rh="true" rel="icon" href="/img/logo.png"><link data-rh="true" rel="canonical" href="https://openember.org/docs/openember-logging"><link data-rh="true" rel="alternate" href="https://openember.org/docs/openember-logging" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://openember.org/en/docs/openember-logging" hreflang="en"><link data-rh="true" rel="alternate" href="https://openember.org/docs/openember-logging" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenEmber Logging","item":"https://openember.org/docs/openember-logging"}]}</script><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="OpenEmber RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="OpenEmber Atom Feed"><link rel="stylesheet" href="/assets/css/styles.6e9d69a5.css">
-<script src="/assets/js/runtime~main.8fe28620.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.3eddd066.js" defer="defer"></script>
 <script src="/assets/js/main.b1f79358.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -17,9 +17,9 @@
 <p>EmberLite 另有独立的轻量 C 实现：<code>ember/log.h</code>（builtin stderr，无 spdlog）。</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="设计要点">设计要点<a href="#设计要点" class="hash-link" aria-label="设计要点的直接链接" title="设计要点的直接链接" translate="no">​</a></h2>
 <ul>
-<li class=""><strong>C++ 优先</strong>：<code>Logger</code> + <code>LoggerConfig</code>（参考 LatentOS log_anywhere 的封装形态，名称保留为 <code>logging</code>）。</li>
+<li class=""><strong>C++ 优先</strong>：<code>Logger</code> + <code>LoggerConfig</code> 为进程内主 API，组件名保持 <code>logging</code>。</li>
 <li class=""><strong>宏兼容</strong>：<code>LOG_I</code> 等仍可用，底层走进程默认 <code>Logger</code>。</li>
-<li class=""><strong>Sinks</strong>：stdout、滚动文件、syslog、msgbus topic（OpenEmber 特色）。</li>
+<li class=""><strong>Sinks</strong>：stdout、滚动文件、syslog、Link topic（可选）。</li>
 <li class=""><strong>不作为 Platform 依赖</strong>：OSAL/LPIO 不调用本组件；C ABI（<code>oe_log_*</code>）仅为遗留 C 翻译单元保留。</li>
 <li class=""><strong>与 <code>services/logger</code> 分离</strong>：后者是读日志文件并提供 HTTP API 的服务进程，不是本库。</li>
 </ul>
