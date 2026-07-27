@@ -20,7 +20,7 @@ Both OpenEmber and EmberLite ship a compatible `scripts/ember`.
 |----------|---------|
 | `OPENEMBER_ROOT` | Force project root (highest priority) |
 | `OPENEMBER_BUILD_DIR` | Default build directory name (`build`) |
-| `OPENEMBER_JOBS` | Parallel build jobs |
+| `OPENEMBER_JOBS` | Parallel build jobs (default: `nproc`) |
 | `OPENEMBER_KCONFIG_NONINTERACTIVE=1` | Non-interactive default `.config` |
 | `OPENEMBER_KCONFIG_FRONTENDS_DIR` | Override kconfig-frontends location |
 

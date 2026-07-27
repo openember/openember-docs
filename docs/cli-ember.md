@@ -20,7 +20,7 @@ OpenEmber 与 EmberLite 均内置兼容的 `scripts/ember` 脚本。
 |------|------|
 | `OPENEMBER_ROOT` | 显式指定工程根目录（优先级最高） |
 | `OPENEMBER_BUILD_DIR` | 默认构建目录名（默认 `build`） |
-| `OPENEMBER_JOBS` | 并行编译任务数 |
+| `OPENEMBER_JOBS` | 并行编译任务数（默认 `nproc`） |
 | `OPENEMBER_KCONFIG_NONINTERACTIVE=1` | menuconfig 以非交互方式生成默认 `.config` |
 | `OPENEMBER_KCONFIG_FRONTENDS_DIR` | 覆盖 kconfig-frontends 解压目录 |
 
