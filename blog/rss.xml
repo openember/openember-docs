@@ -9,18 +9,6 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-Hans</language>
         <item>
-            <title><![CDATA[为什么需要 EmberLite？]]></title>
-            <link>https://openember.org/blog/why-emberlite</link>
-            <guid>https://openember.org/blog/why-emberlite</guid>
-            <pubDate>Wed, 01 Apr 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[在已有 OpenEmber（以现代 C++ 为主线）的前提下，我们仍需要 EmberLite 这一纯 C 实现：在工业控制、医疗与航空航天等场景里，确定性、静态内存与 可认证性往往比语言表现力更重要；C 的调用与资源模型更简单，也更容易通过 MISRA C 等规范审查。]]></description>
-            <content:encoded><![CDATA[<p>在已有 OpenEmber（以现代 C++ 为主线）的前提下，我们仍需要 <strong>EmberLite</strong> 这一纯 <strong>C</strong> 实现：在工业控制、医疗与航空航天等场景里，<strong>确定性</strong>、<strong>静态内存</strong>与 <strong>可认证性</strong>往往比语言表现力更重要；C 的调用与资源模型更简单，也更容易通过 MISRA C 等规范审查。</p>
-<p>EmberLite 并非为了替代 ROS2 或 OpenEmber，而是为<strong>资源受限、偏好 C 运行时</strong>的嵌入式 Linux 设备提供轻量的节点模型与发布-订阅式消息，并与同一套 <strong>Kconfig + CMake</strong> 及 <strong><code>ember</code> CLI</strong> 工作流对齐，降低团队在多仓库间切换的成本。</p>
-<p>更多设计背景见主仓库说明与站内 <a class="" href="https://openember.org/docs/intro">简介</a>。</p>]]></content:encoded>
-            <category>EmberLite</category>
-            <category>OpenEmber</category>
-        </item>
-        <item>
             <title><![CDATA[欢迎使用 OpenEmber 文档站]]></title>
             <link>https://openember.org/blog/openember-docs-site</link>
             <guid>https://openember.org/blog/openember-docs-site</guid>
@@ -38,6 +26,18 @@
             <category>OpenEmber</category>
             <category>EmberLite</category>
             <category>文档</category>
+        </item>
+        <item>
+            <title><![CDATA[为什么需要 EmberLite？]]></title>
+            <link>https://openember.org/blog/why-emberlite</link>
+            <guid>https://openember.org/blog/why-emberlite</guid>
+            <pubDate>Wed, 01 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[在已有 OpenEmber（以现代 C++ 为主线）的前提下，我们仍需要 EmberLite 这一纯 C 实现：在工业控制、医疗与航空航天等场景里，确定性、静态内存与 可认证性往往比语言表现力更重要；C 的调用与资源模型更简单，也更容易通过 MISRA C 等规范审查。]]></description>
+            <content:encoded><![CDATA[<p>在已有 OpenEmber（以现代 C++ 为主线）的前提下，我们仍需要 <strong>EmberLite</strong> 这一纯 <strong>C</strong> 实现：在工业控制、医疗与航空航天等场景里，<strong>确定性</strong>、<strong>静态内存</strong>与 <strong>可认证性</strong>往往比语言表现力更重要；C 的调用与资源模型更简单，也更容易通过 MISRA C 等规范审查。</p>
+<p>EmberLite 并非为了替代 ROS2 或 OpenEmber，而是为<strong>资源受限、偏好 C 运行时</strong>的嵌入式 Linux 设备提供轻量的节点模型与发布-订阅式消息，并与同一套 <strong>Kconfig + CMake</strong> 及 <strong><code>ember</code> CLI</strong> 工作流对齐，降低团队在多仓库间切换的成本。</p>
+<p>更多设计背景见主仓库说明与站内 <a class="" href="https://openember.org/docs/intro">简介</a>。</p>]]></content:encoded>
+            <category>EmberLite</category>
+            <category>OpenEmber</category>
         </item>
     </channel>
 </rss>
