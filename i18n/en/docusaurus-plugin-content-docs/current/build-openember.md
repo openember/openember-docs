@@ -111,7 +111,7 @@ Debian/Ubuntu:
 sudo apt install protobuf-compiler libprotobuf-dev
 ```
 
-More detail: [openember-msgs](./openember-msgs.md).
+More detail: [openember-msgs](./openember-msgs).
 
 ## Outputs
 
