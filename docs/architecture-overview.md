@@ -4,13 +4,12 @@ sidebar_position: 2
 
 # OpenEmber 架构概览
 
-OpenEmber 采用清晰的**五层**模型（依赖自上而下），便于扩展与长期维护：
+OpenEmber 当前采用清晰的**四层**模型（依赖自上而下），便于扩展与长期维护：
 
 1. **Application Layer** — 可执行入口与编排（产品应用、系统节点、可选服务、示例、工具）
-2. **Module Layer** — 插件式功能扩展（传输后端、驱动、桥接、应用模块等）
-3. **Component Layer** — 跨模块复用组件（日志、算法、序列化、容器、配置解析等）
-4. **Core Layer** — 中间件运行时（节点生命周期、调度、话题、参数、服务等）
-5. **Platform Layer** — 操作系统抽象与 **HAL**（线程、定时器、socket、UART、GPIO、I2C 等）
+2. **Middleware Layer** — 通信与核心运行时（Link、消息协议、节点生命周期、调度、参数、服务等）
+3. **Components Layer** — 跨模块复用组件（日志、算法、序列化、容器、配置解析等）
+4. **Platform Layer** — 操作系统抽象与平台 I/O（线程、定时器、socket、UART、GPIO、I2C 等）
 
 Application 在逻辑上是一层；仓库里按职责拆成多个顶层目录，而不是额外架构层：
 
@@ -22,29 +21,29 @@ Application 在逻辑上是一层；仓库里按职责拆成多个顶层目录�
 | `examples/` | 示例与参考实现 |
 | `tools/` | 开发、调试、运维工具 |
 
-其下各层目录大致对应 `modules/`、`components/`、`core/`、`platform/`。另有 `third_party/`、`configs/` 等工程辅助目录。
+其下各层目录大致对应 `communication/`、`core/`、`components/`、`platform/`。另有 `third_party/`、`configs/` 等工程辅助目录。
 
 在 `menuconfig` 中，顶层菜单按工程使用体验做了收敛：
 
 ```text
 Build / Toolchain
 Application Layer
-Middleware
-Components
-Platform
+Middleware Layer
+Components Layer
+Platform Layer
 Third party
 Tests
 ```
 
-其中 `Application Layer` 聚合 `apps/`、`system/`、`services/`、`examples/`、`tools/`。当前 `modules/` 目录保留为未来扩展槽；由于暂时没有独立配置项，不再作为顶层菜单显示。
-`Middleware` 聚合通信与核心运行时配置，例如 `Communication`、`Core Runtime`。
+其中 `Application Layer` 聚合 `apps/`、`system/`、`services/`、`examples/`、`tools/`。
+`Middleware Layer` 聚合通信与核心运行时配置，例如 `Communication`、`Core Runtime`。
 
 ## 依赖方向
 
 ```
 Application（apps / system / services / examples / tools）
   ↓
-modules
+middleware（communication / core）
   ↓
 components
   ↓

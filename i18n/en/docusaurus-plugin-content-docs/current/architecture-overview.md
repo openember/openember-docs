@@ -4,13 +4,12 @@ sidebar_position: 2
 
 # Architecture overview
 
-OpenEmber uses a **five-layer** model (dependencies flow downward):
+OpenEmber currently uses a **four-layer** model (dependencies flow downward):
 
 1. **Application layer** — executable entrypoints and orchestration (product apps, system nodes, optional services, examples, tools)
-2. **Module layer** — pluggable features (transports, drivers, bridges, application modules, …)
-3. **Component layer** — shared building blocks (logging, algorithms, serialization, containers, config, …)
-4. **Core layer** — middleware runtime (node lifecycle, scheduling, topics, parameters, services, …)
-5. **Platform layer** — OS abstraction and **HAL** (threads, timers, sockets, UART, GPIO, I2C, …)
+2. **Middleware layer** — communication and core runtime (Link, messages, node lifecycle, scheduling, parameters, services, …)
+3. **Components layer** — shared building blocks (logging, algorithms, serialization, containers, config, …)
+4. **Platform layer** — OS abstraction and platform I/O (threads, timers, sockets, UART, GPIO, I2C, …)
 
 Application is one logical layer. In the repo it is split by role into several top-level directories—not extra architecture layers:
 
@@ -22,14 +21,14 @@ Application is one logical layer. In the repo it is split by role into several t
 | `examples/` | Samples and reference implementations |
 | `tools/` | Dev, debug, and ops utilities |
 
-Lower layers map roughly to `modules/`, `components/`, `core/`, and `platform/`. Helper dirs such as `third_party/` and `configs/` sit outside the five-layer stack.
+Lower layers map roughly to `communication/`, `core/`, `components/`, and `platform/`. Helper dirs such as `third_party/` and `configs/` sit outside the four-layer stack.
 
 ## Dependency direction
 
 ```
 Application (apps / system / services / examples / tools)
   ↓
-modules
+middleware (communication / core)
   ↓
 components
   ↓
@@ -42,7 +41,7 @@ Operating system (Linux, …)
 
 Upper layers depend on lower layers, not the reverse—making tests and backend swaps (e.g. transport or HAL) easier.
 
-Component-layer building blocks include `Logging`, `Algorithm`, and `Thread Pool`; `Middleware` groups communication and core runtime settings.
+Component-layer building blocks include `Logging`, `Algorithm`, and `Thread Pool`; `Middleware Layer` groups communication and core runtime settings.
 
 ## Design goals (summary)
 

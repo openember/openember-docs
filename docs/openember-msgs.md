@@ -32,7 +32,7 @@ OpenEmber 已接入 `openember-msgs` 的 C++ Protobuf 生成目标，默认通�
 
 ## Kconfig 管理方案
 
-消息协议是 OpenEmber 生态的一等通信契约，影响节点、工具、设备管理、诊断、参数和运行时服务。它不应归入 `Core`、`Component` 或纯 `Third party` 菜单，而应放在通信层统一管理：
+消息协议是 OpenEmber 生态的一等通信契约，影响节点、工具、设备管理、诊断、参数和运行时服务。它不应归入 `Core Runtime`、`Components Layer` 或纯 `Third party` 菜单，而应放在 `Middleware Layer` 的通信层统一管理：
 
 ```text
 Communication / Messages
