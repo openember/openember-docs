@@ -24,6 +24,21 @@ Application 在逻辑上是一层；仓库里按职责拆成多个顶层目录�
 
 其下各层目录大致对应 `modules/`、`components/`、`core/`、`platform/`。另有 `third_party/`、`configs/` 等工程辅助目录。
 
+在 `menuconfig` 中，顶层菜单按工程使用体验做了收敛：
+
+```text
+Build / Toolchain
+Application Layer
+Middleware
+Components
+Platform
+Third party
+Tests
+```
+
+其中 `Application Layer` 聚合 `apps/`、`system/`、`services/`、`examples/`、`tools/`。当前 `modules/` 目录保留为未来扩展槽；由于暂时没有独立配置项，不再作为顶层菜单显示。
+`Middleware` 聚合通信与核心运行时配置，例如 `Communication`、`Core Runtime`。
+
 ## 依赖方向
 
 ```

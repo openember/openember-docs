@@ -42,7 +42,7 @@ Operating system (Linux, …)
 
 Upper layers depend on lower layers, not the reverse—making tests and backend swaps (e.g. transport or HAL) easier.
 
-Component-layer building blocks include [Logging](./openember-logging.md), [Algorithm](./openember-algorithm.md), and [Thread Pool](./openember-thread-pool.md); see [OpenEmber Link](./openember-link.md) for the communication layer.
+Component-layer building blocks include `Logging`, `Algorithm`, and `Thread Pool`; `Middleware` groups communication and core runtime settings.
 
 ## Design goals (summary)
 
@@ -50,4 +50,4 @@ Component-layer building blocks include [Logging](./openember-logging.md), [Algo
 - **Dependency management**: options such as `OPENEMBER_THIRD_PARTY_MODE` (FETCH / VENDOR / SYSTEM) for CI and offline builds.
 - **Communication abstraction**: OpenEmber Link exposes stable Topic, Service, Liveliness, and codec semantics while hiding the transport backend.
 
-For the full layered specification, see the upstream [layered design guide](https://github.com/openember/openember/blob/main/docs/architecture/layered-architecture-design-guide.md) and [Application layer design guide](https://github.com/openember/openember/blob/main/docs/architecture/application-layer-design-guide.md); for communication, see [OpenEmber Link](./openember-link.md).
+For the full layered specification, see the upstream [layered design guide](https://github.com/openember/openember/blob/main/docs/architecture/layered-architecture-design-guide.md) and [Application layer design guide](https://github.com/openember/openember/blob/main/docs/architecture/application-layer-design-guide.md).
