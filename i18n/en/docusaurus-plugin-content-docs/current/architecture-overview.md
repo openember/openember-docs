@@ -15,7 +15,7 @@ Application is one logical layer. In the repo it is split by role into several t
 
 | Directory | Role |
 |-----------|------|
-| `apps/` | Product or user-project entrypoints (framework-owned nodes do not live here) |
+| `apps/` | Product or user-project entrypoints; framework-owned nodes do not live here. `smart_device_demo` is the minimal product-app reference. |
 | `system/` | Built-in, mostly essential system nodes |
 | `services/` | Optional runtime services |
 | `examples/` | Samples and reference implementations |
