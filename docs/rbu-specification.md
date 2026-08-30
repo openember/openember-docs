@@ -60,7 +60,7 @@ RBU 的完整架构可以从七个层次理解，但 **RBU 1.0 并不要求用�
 | Instance Model | 实例模型 / 设备实例模型 | 暂不标准化 |
 | Artifact Model | 制品模型 / 构建制品模型 | 核心 |
 | Bundle Model | 升级包模型 | 核心 |
-| Execution Model | 升级执行模型 | 最小定义 |
+| Execution Model | 升级执行模型 | handler / order / reboot_after |
 | Security Model | 安全模型 | 完整性校验 |
 
 对于普通 RBU 使用者，第一版真正需要理解的关系只有：
@@ -424,9 +424,12 @@ Incremental Bundle：
 | `version` | string | MUST | Target Release 中的目标版本 |
 | `handler` | string | MUST | Update Handler 标识 |
 | `order` | integer | MUST | 最小执行顺序提示，数值越小越先执行 |
+| `reboot_after` | boolean | MAY | 安装成功后是否形成重启屏障；见第 12.3 节 |
 | `artifact` | object | 条件必须 | 当前 Bundle 实际携带该组件时提供 |
 
 `order` SHOULD 在一个 Manifest 内保持唯一。实现不应依赖相同 `order` 值之间的隐式执行顺序。
+
+若省略 `reboot_after`，语义等同于 `false`。
 
 ---
 
@@ -503,12 +506,18 @@ Bundle      = 将设备带到 Desired State 所需的交付内容
 
 ## 12. Execution Model（升级执行模型）
 
-RBU 1.0 只定义最小执行元数据：
+RBU 1.0 的最小执行元数据为：
 
 ```text
 handler
 order
+reboot_after
 ```
+
+其中：
+
+- `handler` / `order` 决定**谁来装、按什么顺序装**；
+- `reboot_after` 决定**某个 Component 成功后是否形成重启屏障，以及重启后是否继续后续 Component**。
 
 ### 12.1 Handler
 
@@ -536,7 +545,7 @@ Handler 负责具体升级机制，例如：
 - Bootloader Protocol；
 - Component Version Probe；
 - 安装后校验；
-- Reboot；
+- 触发重启；
 - Rollback。
 
 因此：
@@ -569,6 +578,46 @@ phase graph
 ```
 
 如果未来实际项目证明单一 `order` 无法表达真实依赖，再在后续规范中扩展。
+
+### 12.3 Reboot After（重启后继续）
+
+机器人升级经常需要在系统镜像或关键运行时更新后重启，并在重启后继续安装固件或其他组件。RBU 1.0 用 Component 级布尔字段 `reboot_after` **声明重启屏障**，使 Manifest 能够表达「装完某组件 → 重启 → 继续后续组件」。
+
+允许取值：
+
+| 值 | 含义 |
+| --- | --- |
+| `false` | 不形成重启屏障（默认；字段可省略） |
+| `true` | 该 Component **成功完成后**，在执行任何更大 `order` 的 Component 之前 MUST 先重启，并在重启后继续 |
+
+示例：
+
+```json
+{
+  "id": "system",
+  "version": "1.0.0",
+  "handler": "openember.system-image",
+  "order": 100,
+  "reboot_after": true
+}
+```
+
+语义要求：
+
+1. Agent MUST 按 `order` 升序执行需要安装的 Component。
+2. 当某个已执行 Component 的 `reboot_after` 为 `true` 且安装成功时，Agent MUST 将其视为执行计划中的**重启屏障**：在继续后续 Component 之前完成重启。
+3. 重启之后，Agent MUST 从该屏障之后、尚未完成的 Component 继续执行，而不是无条件从头完整重跑整个 Bundle。
+4. 若某个 Component 在本次计划中被跳过（例如 Incremental Bundle 中未变化且未实际安装），则其 `reboot_after` SHOULD NOT 触发重启屏障。
+5. 同一 Manifest 中可以出现多个 `reboot_after: true`；每一个成功执行的屏障都独立生效。
+
+RBU 1.0 **只定义上述 Manifest 语义**，不规定实现细节，例如：
+
+- 如何发起重启（由 Agent、Handler 或 Bootloader 触发）；
+- 进度/检查点保存在何处（文件、数据库、A/B metadata 等）；
+- 重启超时、失败重试、掉电恢复策略；
+- 重启后如何重新发现未完成的 Bundle。
+
+这些属于具体 RBU Agent 的实现职责。
 
 ---
 
@@ -736,6 +785,7 @@ D50_HW1C1_1.0.0_full.rbu
       "version": "1.0.0",
       "handler": "openember.system-image",
       "order": 100,
+      "reboot_after": true,
       "artifact": {
         "path": "artifacts/OpenEmber_D50_1.0.0.zip",
         "size": 0,
@@ -791,6 +841,8 @@ D50_HW1C1_1.0.0_full.rbu
 ```
 
 > 示例中的 `size: 0` 和 `<sha256>` 仅作为文档占位。正式 Builder MUST 使用 Artifact 的实际字节数和 SHA-256。
+>
+> 本例中 `system` 声明 `"reboot_after": true`，表示 Linux Image 安装成功后先重启，再继续安装 `openember`、固件等后续组件。Agent 如何持久化进度并在重启后恢复，不属于本规范范围。
 
 ### 15.3 Incremental Bundle
 
@@ -836,7 +888,8 @@ D50_HW1C1_1.0.0_to_1.0.1.rbu
       "id": "system",
       "version": "1.0.0",
       "handler": "openember.system-image",
-      "order": 100
+      "order": 100,
+      "reboot_after": true
     },
     {
       "id": "openember",
@@ -917,7 +970,8 @@ RBU Specification 定义的是格式和语义，不规定具体产品必须如�
 - 检查 Product / Release Compatibility；
 - 校验 Artifact Size / SHA-256；
 - 根据 `handler` 查找 Update Handler；
-- 根据 `order` 创建最小执行计划；
+- 根据 `order` 与 `reboot_after` 创建最小执行计划（含重启屏障）；
+- 在需要时持久化执行进度，以便重启后继续；
 - 调用 Handler 完成具体升级。
 
 ---
@@ -941,7 +995,8 @@ RBU Specification 定义的是格式和语义，不规定具体产品必须如�
 - Dependency Graph；
 - Distributed Transaction；
 - 完整 Rollback Model；
-- Digital Signature / PKI。
+- Digital Signature / PKI；
+- 重启如何触发、进度检查点如何存储、掉电恢复如何实现（Manifest 仅声明 `reboot_after` 语义）。
 
 这些能力可以由具体实现自行提供，也可以在未来 RBU 版本中根据真实需求逐步标准化。
 
@@ -992,7 +1047,7 @@ Future
 
 RBU 1.0 可以浓缩为一句话：
 
-> **RBU = Release Manifest + Component Artifacts + Handler Contract + Integrity Verification.**
+> **RBU = Release Manifest + Component Artifacts + Handler Contract + Reboot Continue + Integrity Verification.**
 
 其最核心的数据关系是：
 
@@ -1016,7 +1071,7 @@ RBU 1.0 可以浓缩为一句话：
                           ▼
                        Agent
                           │
-               handler + order + hash
+               handler + order + reboot_after + hash
                           │
                           ▼
                     Desired State
