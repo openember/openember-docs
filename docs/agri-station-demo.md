@@ -33,14 +33,13 @@ OpenEmber 面向 Linux 多节点运行时，适合**常驻边缘站**，不适�
 
 ```text
 launch_manager
-  ├── agri_station_app
-  ├── hardware_interface
+  ├── agri_station_app      # 策略/告警 + 可选系统 Qt 现场台（--no-gui 无头）
+  ├── agri_mock_* / HI
   ├── health_monitor / config_service / device_manager
-  ├── web_console
-  └── host_monitor（可选）
+  └── web_console / host_monitor（可选运维面）
 ```
 
-第一版以监测与告警为主；实驱水泵/风机可后置。
+现场界面做在 `agri_station_app` 内（非 Web）；构建需系统安装 `qt6-base-dev`（或 Qt5），由 `OPENEMBER_AGRI_STATION_GUI` 控制。第一版以监测与告警为主；实驱水泵/风机可后置。
 
 ## 与其它 Demo
 

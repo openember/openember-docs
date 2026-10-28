@@ -33,14 +33,13 @@ Minimum hardware: at least two real sensors. Details in the main-repo design doc
 
 ```text
 launch_manager
-  ├── agri_station_app
-  ├── hardware_interface
+  ├── agri_station_app      # policy/alerts + optional system Qt console (--no-gui)
+  ├── agri_mock_* / HI
   ├── health_monitor / config_service / device_manager
-  ├── web_console
-  └── host_monitor (optional)
+  └── web_console / host_monitor (optional ops surface)
 ```
 
-v1 is monitor + alert; driving pumps/fans can come later.
+The field UI lives in `agri_station_app` (not web). Build against system `qt6-base-dev` (or Qt5) via `OPENEMBER_AGRI_STATION_GUI`. v1 is monitor + alert; driving pumps/fans can come later.
 
 ## Related demos
 
