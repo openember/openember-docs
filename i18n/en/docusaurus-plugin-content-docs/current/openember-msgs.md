@@ -17,7 +17,7 @@ Core principles:
 
 | Package | Purpose |
 |---------|---------|
-| `common/v1` | Shared types (`Header`, `Status`, …) |
+| `common/v1` | Shared types (`Header`, `Status`, `QosProfile`, `Metric`, `BoolStamped`, …) |
 | `node/v1` | Node info, heartbeat, registry |
 | `lifecycle/v1` | Lifecycle state and transitions |
 | `diagnostics/v1` | Health / diagnostics |
@@ -25,11 +25,20 @@ Core principles:
 | `log/v1` | Structured logs |
 | `device/v1` | Device info and status |
 | `runtime/v1` | Process start/stop events |
-| `sensor/v1` | IMU, temperature, GNSS samples and status |
+| `sensor/v1` | IMU, temperature, GNSS samples and status; generic `ScalarSample` |
 | `actuator/v1` | Joint commands, state, actuator health |
 | `power/v1` | Battery / power state and control |
 | `geometry/v1` | Planar pose and twist (`Pose2D`, `Twist2D`; see [Turtle Demo](./turtle-demo.md)) |
 | `host/v1` | Host resource snapshot (`HostResourceSnapshot`: CPU / memory / load / disk; published by `services/host_monitor` on `/host/resources`) |
+
+### Shared helper types
+
+| Type | Package | Purpose |
+|------|---------|---------|
+| `BoolStamped` | `common/v1` | Header-stamped boolean (e-stop, enable flags, …) |
+| `ScalarSample` | `sensor/v1` | Header-stamped scalar: `quantity` + `value` + `unit` (humidity, illuminance, soil moisture, CO₂, … when no dedicated type exists yet) |
+
+These are cross-product helpers, not tied to a single demo. Source of truth: the corresponding `.proto` files in `openember-msgs`.
 
 Both OpenEmber and EmberLite gate protocol generation with `OPENEMBER_ENABLE_MSGS`. Source selection is `FETCH` (default, pulls `main`) or `LOCAL` (path via `OPENEMBER_MSGS_LOCAL_SOURCE`).
 

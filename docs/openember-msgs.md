@@ -19,7 +19,7 @@ sidebar_position: 5
 
 | 包 | 用途 |
 |----|------|
-| `common/v1` | `Header`、`Status`、`QosProfile`、`Metric` 等通用类型 |
+| `common/v1` | `Header`、`Status`、`QosProfile`、`Metric`、`BoolStamped` 等通用类型 |
 | `node/v1` | 节点信息、心跳、节点查询、节点注册表快照 |
 | `lifecycle/v1` | 生命周期状态、状态切换命令与事件 |
 | `diagnostics/v1` | 诊断状态与健康信息 |
@@ -27,11 +27,20 @@ sidebar_position: 5
 | `log/v1` | 结构化日志 |
 | `device/v1` | 设备信息、设备状态、设备查询 |
 | `runtime/v1` | 进程启动、停止和进程事件 |
-| `sensor/v1` | IMU、温度、GNSS 等传感器样本与状态 |
+| `sensor/v1` | IMU、温度、GNSS 样本与状态；通用标量样本 `ScalarSample` |
 | `actuator/v1` | 关节命令、状态与执行器健康 |
 | `power/v1` | 电池与电源状态 / 控制 |
 | `geometry/v1` | 平面位姿与速度（`Pose2D`、`Twist2D`；见 [Turtle Demo](./turtle-demo.md)） |
 | `host/v1` | 主机资源快照（`HostResourceSnapshot`：CPU / 内存 / 负载 / 磁盘；由 `services/host_monitor` 发布到 `/host/resources`） |
+
+### 通用辅助类型
+
+| 类型 | 包 | 用途 |
+|------|-----|------|
+| `BoolStamped` | `common/v1` | 带 `Header` 的布尔值（如急停、使能开关） |
+| `ScalarSample` | `sensor/v1` | 带 `Header` 的单标量读数：`quantity` + `value` + `unit`（湿度、光照、墒情、CO₂ 等尚未单独立类型时使用） |
+
+二者为跨产品复用的通用消息，不绑定某一 Demo。权威定义见 `openember-msgs` 仓库对应 `.proto`。
 
 OpenEmber 已接入 `openember-msgs` 的 C++ Protobuf 生成目标，默认通过 `FETCH` 拉取 `main` archive，也可显式选择 `LOCAL` 使用本地 checkout。EmberLite 已接入 Nanopb C 生成目标。两个工程都通过 `OPENEMBER_ENABLE_MSGS` 管理消息协议是否启用。
 
