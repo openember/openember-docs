@@ -43,4 +43,6 @@ See [Build OpenEmber](./build-openember.md), [Build EmberLite](./build-emberlite
 - [Architecture overview](./architecture-overview.md)
 - [Build OpenEmber](./build-openember.md)
 - [Turtle Demo](./turtle-demo.md) (host turtlesim)
+- [Rover Demo](./rover-demo.md) (planned diff-drive rover)
+- [Agri Station Demo](./agri-station-demo.md) (planned smart-agri station)
 - [Build EmberLite](./build-emberlite.md)

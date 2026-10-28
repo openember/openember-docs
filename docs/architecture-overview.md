@@ -15,7 +15,7 @@ Application 在逻辑上是一层；仓库里按职责拆成多个顶层目录�
 
 | 目录 | 角色 |
 |------|------|
-| `apps/` | 产品或用户项目入口（框架自带节点不放这里；`smart_device_demo` 为产品应用参考，`turtle_demo` 为宿主机仿真小乌龟，见 [Turtle Demo](./turtle-demo.md)） |
+| `apps/` | 产品或用户项目入口（框架自带节点不放这里；`turtle_demo` 见 [Turtle Demo](./turtle-demo.md)；规划中的巡游小车 / 智慧农业站见 [Rover Demo](./rover-demo.md)、[Agri Station Demo](./agri-station-demo.md)；现有 `smart_device_demo` 将演进为农业站） |
 | `system/` | OpenEmber 自带、偏必需的系统节点 |
 | `services/` | 可选 runtime 服务 |
 | `examples/` | 示例与参考实现 |

@@ -119,7 +119,9 @@ configs/turtle.launch.yaml
 ## 与其它示例的关系
 
 - `examples/core/*`、`hello_node`：单能力 / API 教学，不是整机故事。
-- `smart_device_demo`：产品应用 + 系统节点（参数、设备、心跳）骨架，默认不跑仿真小车。
+- `smart_device_demo`：产品应用 + 系统节点骨架；将演进为 [Agri Station Demo](./agri-station-demo.md)（智慧农业监测站）。
 - **Turtle Demo**：宿主机上最快看到「多节点 Link + 消息 +（可选）launch」闭环；后续可再挂 Mock Hardware Interface 或 system 节点，而不改话题故事。
+- **[Rover Demo](./rover-demo.md)**（规划中）：差速巡游小车（仿真 + ¥3000 内 DIY），补齐执行、传感与安全。
+- **[Agri Station Demo](./agri-station-demo.md)**（规划中）：棚内/田间多传感 + 告警/降级 + 运维面，发挥 App / health / config / launch 分工。
 
 通信语义详见 [OpenEmber Link](./openember-link.md)；分层位置见 [架构概览](./architecture-overview.md)。

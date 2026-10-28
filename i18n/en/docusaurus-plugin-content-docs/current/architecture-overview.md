@@ -15,7 +15,7 @@ Application is one logical layer. In the repo it is split by role into several t
 
 | Directory | Role |
 |-----------|------|
-| `apps/` | Product or user-project entrypoints; framework-owned nodes do not live here. `smart_device_demo` is the product-app reference; `turtle_demo` is the host turtlesim demo ([Turtle Demo](./turtle-demo.md)). |
+| `apps/` | Product or user-project entrypoints; framework-owned nodes do not live here. `turtle_demo` is [Turtle Demo](./turtle-demo.md); planned rover / agri station are [Rover Demo](./rover-demo.md) and [Agri Station Demo](./agri-station-demo.md); today’s `smart_device_demo` evolves into the agri station. |
 | `system/` | Built-in, mostly essential system nodes |
 | `services/` | Optional runtime services |
 | `examples/` | Samples and reference implementations |
