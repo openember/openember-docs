@@ -42,4 +42,5 @@ See [Build OpenEmber](./build-openember.md), [Build EmberLite](./build-emberlite
 
 - [Architecture overview](./architecture-overview.md)
 - [Build OpenEmber](./build-openember.md)
+- [Turtle Demo](./turtle-demo.md) (host turtlesim)
 - [Build EmberLite](./build-emberlite.md)

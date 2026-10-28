@@ -268,4 +268,4 @@ Link 应内建以下能力：
 5. **节点注册表**：基于 `NodeInfo`、`NodeHeartbeat`、liveliness 建立运行时节点发现。
 6. **诊断闭环**：把连接、解析、服务超时、节点离线等事件纳入 diagnostics。
 
-短期内可以保留 `components/transport` 的直接示例作为底层调试工具；面向用户的核心示例应逐步切换到 Link API。
+短期内可以保留 `components/transport` 的直接示例作为底层调试工具；面向用户的核心示例应逐步切换到 Link API。宿主机上可先跑 [Turtle Demo](./turtle-demo.md)（`Twist2D` / `Pose2D` 多进程闭环）验证 Link 与 msgs。

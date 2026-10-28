@@ -133,6 +133,8 @@ sudo apt install protobuf-compiler libprotobuf-dev
 
 构建成功后，可执行文件通常位于 **`build/bin/`**（具体目标取决于 Kconfig 中启用的模块与示例）。
 
+启用 `OPENEMBER_APP_TURTLE_DEMO` 时，可得到宿主机小乌龟仿真：`openember_turtle_sim` / `openember_turtle_teleop`（GUI 需 `libsdl2-dev`）。运行说明见 [Turtle Demo](./turtle-demo.md)。
+
 ## 常见问题
 
 - **Missing `build/.config`**：先运行 `./scripts/ember menuconfig`、`menuconfig.sh`，或使用 `OPENEMBER_KCONFIG_NONINTERACTIVE=1` 生成默认配置。  

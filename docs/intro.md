@@ -43,4 +43,5 @@ sidebar_position: 1
 
 - 了解分层结构：[架构概览](./architecture-overview.md)
 - 构建主仓库：[构建 OpenEmber](./build-openember.md)
+- 宿主机跑通小乌龟：[Turtle Demo](./turtle-demo.md)
 - 构建轻量仓库：[构建 EmberLite](./build-emberlite.md)

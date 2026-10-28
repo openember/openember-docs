@@ -25,6 +25,10 @@ Core principles:
 | `log/v1` | Structured logs |
 | `device/v1` | Device info and status |
 | `runtime/v1` | Process start/stop events |
+| `sensor/v1` | IMU, temperature, GNSS samples and status |
+| `actuator/v1` | Joint commands, state, actuator health |
+| `power/v1` | Battery / power state and control |
+| `geometry/v1` | Planar pose and twist (`Pose2D`, `Twist2D`; see [Turtle Demo](./turtle-demo.md)) |
 
 Both OpenEmber and EmberLite gate protocol generation with `OPENEMBER_ENABLE_MSGS`. Source selection is `FETCH` (default, pulls `main`) or `LOCAL` (path via `OPENEMBER_MSGS_LOCAL_SOURCE`).
 

@@ -27,6 +27,10 @@ sidebar_position: 5
 | `log/v1` | 结构化日志 |
 | `device/v1` | 设备信息、设备状态、设备查询 |
 | `runtime/v1` | 进程启动、停止和进程事件 |
+| `sensor/v1` | IMU、温度、GNSS 等传感器样本与状态 |
+| `actuator/v1` | 关节命令、状态与执行器健康 |
+| `power/v1` | 电池与电源状态 / 控制 |
+| `geometry/v1` | 平面位姿与速度（`Pose2D`、`Twist2D`；见 [Turtle Demo](./turtle-demo.md)） |
 
 OpenEmber 已接入 `openember-msgs` 的 C++ Protobuf 生成目标，默认通过 `FETCH` 拉取 `main` archive，也可显式选择 `LOCAL` 使用本地 checkout。EmberLite 已接入 Nanopb C 生成目标。两个工程都通过 `OPENEMBER_ENABLE_MSGS` 管理消息协议是否启用。
 

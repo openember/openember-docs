@@ -117,6 +117,8 @@ More detail: [openember-msgs](./openember-msgs).
 
 Binaries usually land under **`build/bin/`** depending on enabled modules and examples.
 
+With `OPENEMBER_APP_TURTLE_DEMO` enabled you get the host turtlesim binaries `openember_turtle_sim` / `openember_turtle_teleop` (GUI needs `libsdl2-dev`). See [Turtle Demo](./turtle-demo.md).
+
 ## Troubleshooting
 
 - **Missing `build/.config`**: run `./scripts/ember menuconfig`, `menuconfig.sh`, or non-interactive generation first.  
