@@ -8,6 +8,14 @@ sidebar_position: 3.5
 
 它对应应用层中的产品/演示入口（`apps/`），不是 `examples/` 里的 API 碎片示例。若要看完整系统监督（health / device / config），可继续参考 `smart_device_demo` 与 `configs/smart_device.launch.yaml`。
 
+## 和 ROS turtlesim 一样：平面移动机器人
+
+本示例对标经典 ROS **`turtlesim`**：可以把它理解成**在平面上跑的移动机器人**，而不是真车或三维仿真。
+
+- **二维平面**：只有位姿 \(x, y, \theta\)，窗口里画网格与小龟；**没有三维场景**。
+- **运动学模型**：更接近 unicycle / 差速小车——用线速度与角速度控制；没有车轮、悬挂、Ackermann 转向或物理碰撞。
+- **用途**：练多节点通信与消息（Topic / Link / msgs），不是车辆或 Gazebo 级仿真。若要三维可视化或真实机器人模型，需另接 RViz / Gazebo 等，不在 turtlesim 档位内。
+
 ## 能展示什么
 
 | 能力 | 本示例中的体现 |

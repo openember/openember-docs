@@ -8,6 +8,14 @@ sidebar_position: 3.5
 
 This lives under the Application layer (`apps/`), not as a tiny API sample in `examples/`. For full runtime supervision (health / device / config), see `smart_device_demo` and `configs/smart_device.launch.yaml`.
 
+## Like ROS turtlesim: a planar mobile robot
+
+This demo mirrors classic ROS **`turtlesim`**: think of it as a **mobile robot on a plane**, not a real car or a 3D simulator.
+
+- **2D only**: pose is \(x, y, \theta\); the window shows a grid and turtle. **No 3D scene.**
+- **Kinematics**: closer to a unicycle / differential-drive model—commanded by linear and angular velocity; no wheels, suspension, Ackermann steering, or physics collisions.
+- **Purpose**: practice multi-node messaging (topics / Link / msgs), not vehicle or Gazebo-class simulation. For 3D visualization or real robot models, use something like RViz / Gazebo; that is outside the turtlesim tier.
+
 ## What it demonstrates
 
 | Capability | In this demo |
