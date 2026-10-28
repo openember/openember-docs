@@ -67,7 +67,8 @@ GUI 下关闭窗口或按 `Esc` 结束 `turtle_sim`。
 需已启用并构建 `launch_manager`：
 
 ```bash
-./build/bin/launch_manager configs/turtle.launch.yaml
+./build/bin/launch_manager --launch configs/turtle.launch.yaml
+# 也可写成：./build/bin/launch_manager configs/turtle.launch.yaml
 ```
 
 该配置里：`launch_manager` 作为 Link router；`turtle_sim` / `turtle_teleop` 以 `--client` 接入，teleop 带 `--demo`。sim 默认仍开 SDL 窗口（需要可用的 `DISPLAY`）。

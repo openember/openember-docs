@@ -67,7 +67,8 @@ Close the window or press `Esc` to stop `turtle_sim` in GUI mode.
 Requires a built `launch_manager`:
 
 ```bash
-./build/bin/launch_manager configs/turtle.launch.yaml
+./build/bin/launch_manager --launch configs/turtle.launch.yaml
+# also accepted: ./build/bin/launch_manager configs/turtle.launch.yaml
 ```
 
 `launch_manager` is the Link router; sim and teleop join as `--client`, with teleop `--demo`. The sim still opens SDL unless you change the launch args (needs a working `DISPLAY`).

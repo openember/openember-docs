@@ -31,6 +31,7 @@ sidebar_position: 5
 | `actuator/v1` | 关节命令、状态与执行器健康 |
 | `power/v1` | 电池与电源状态 / 控制 |
 | `geometry/v1` | 平面位姿与速度（`Pose2D`、`Twist2D`；见 [Turtle Demo](./turtle-demo.md)） |
+| `host/v1` | 主机资源快照（`HostResourceSnapshot`：CPU / 内存 / 负载 / 磁盘；由 `services/host_monitor` 发布到 `/host/resources`） |
 
 OpenEmber 已接入 `openember-msgs` 的 C++ Protobuf 生成目标，默认通过 `FETCH` 拉取 `main` archive，也可显式选择 `LOCAL` 使用本地 checkout。EmberLite 已接入 Nanopb C 生成目标。两个工程都通过 `OPENEMBER_ENABLE_MSGS` 管理消息协议是否启用。
 

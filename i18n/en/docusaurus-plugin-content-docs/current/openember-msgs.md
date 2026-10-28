@@ -29,6 +29,7 @@ Core principles:
 | `actuator/v1` | Joint commands, state, actuator health |
 | `power/v1` | Battery / power state and control |
 | `geometry/v1` | Planar pose and twist (`Pose2D`, `Twist2D`; see [Turtle Demo](./turtle-demo.md)) |
+| `host/v1` | Host resource snapshot (`HostResourceSnapshot`: CPU / memory / load / disk; published by `services/host_monitor` on `/host/resources`) |
 
 Both OpenEmber and EmberLite gate protocol generation with `OPENEMBER_ENABLE_MSGS`. Source selection is `FETCH` (default, pulls `main`) or `LOCAL` (path via `OPENEMBER_MSGS_LOCAL_SOURCE`).
 
