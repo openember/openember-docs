@@ -39,7 +39,7 @@ launch_manager
   └── web_console / host_monitor（可选运维面）
 ```
 
-现场界面做在 `agri_station_app` 内（非 Web）；构建需系统安装 `qt6-base-dev`（或 Qt5），由 `OPENEMBER_AGRI_STATION_GUI` 控制。第一版以监测与告警为主；实驱水泵/风机可后置。
+现场界面做在 `agri_station_app` 内（非 Web）：顶栏菜单 + 卡片图表（系统 `qt6-base-dev`、`qt6-charts-dev` 或 Qt5 等价包），由 `OPENEMBER_AGRI_STATION_GUI` 控制。第一版以监测与告警为主；实驱水泵/风机可后置。
 
 ## 与其它 Demo
 

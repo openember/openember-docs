@@ -39,7 +39,7 @@ launch_manager
   └── web_console / host_monitor (optional ops surface)
 ```
 
-The field UI lives in `agri_station_app` (not web). Build against system `qt6-base-dev` (or Qt5) via `OPENEMBER_AGRI_STATION_GUI`. v1 is monitor + alert; driving pumps/fans can come later.
+The field UI lives in `agri_station_app` (not web): top nav + chart cards using system `qt6-base-dev` and `qt6-charts-dev` (or Qt5 equivalents), gated by `OPENEMBER_AGRI_STATION_GUI`. v1 is monitor + alert; driving pumps/fans can come later.
 
 ## Related demos
 
