@@ -48,15 +48,30 @@ ember build
 | `./scripts/ember menuconfig [build_dir]` | 交互式菜单，写入 `.config` 并刷新 `config.cmake` |
 | `./scripts/ember genconfig [build_dir]` | 仅根据 `.config` 重写 `config.cmake` |
 | `./scripts/ember update [build_dir]` | `cmake -S . -B <dir>`（别名：`configure`） |
-| `./scripts/ember build [build_dir]` | 必要时补齐配置后完整编译 |
-| `./scripts/ember all [build_dir]` | menuconfig + update + build |
+| `./scripts/ember build [build_dir] [-j N]` | 必要时补齐配置后完整编译；支持 `--jobs N` |
+| `./scripts/ember all [build_dir] [-j N]` | menuconfig + update + build；支持 `--jobs N` |
 | `./scripts/ember clean [build_dir]` | 删除构建目录 |
 
-并行任务数由环境变量 **`OPENEMBER_JOBS`** 控制，**默认等于 `nproc`（本机逻辑 CPU 数）**。机器核数较多、链接体积较大时，建议显式降低并行度，例如：
+### 并行任务数
+
+`build` / `all` 默认使用**可用逻辑 CPU 数的一半，向下取整，至少 1、最多 8 个任务**。
+例如 32 个逻辑 CPU 默认使用 8 个任务。覆盖优先级为
+**`-j` / `--jobs` > `OPENEMBER_JOBS` > 自动默认值**：
 
 ```bash
+./scripts/ember build -j 4
+./scripts/ember all --jobs=4
 OPENEMBER_JOBS=4 ./scripts/ember build
+# 必要时单独降低 Rust/Cargo 并行度
+CARGO_BUILD_JOBS=2 ./scripts/ember build -j 4
 ```
+
+Cargo 默认跟随所选任务数；显式 `CARGO_BUILD_JOBS` 优先。嵌套 CMake 会继承
+`CMAKE_BUILD_PARALLEL_LEVEL`。显式任务数可以超过默认上限 8，但必须为正整数；
+零、负数及非整数会在构建前报错。
+
+这是构建工具的任务并行度，不是整个进程树的 CPU 硬配额，也不属于产品 Kconfig。
+完整参数写法、日志示例和旧版 CLI 的区别见 [CLI 并行任务数](./cli-ember.md#parallel-build-jobs)。
 
 更多安装方式、环境管理（`ember add` / `use`）与完整子命令说明见 [ember CLI 命令行工具](./cli-ember.md)。
 
@@ -77,9 +92,13 @@ bash scripts/kconfig/menuconfig.sh build
 bash scripts/kconfig/genconfig.sh build
 
 # 3) CMake 配置与编译
+export CMAKE_BUILD_PARALLEL_LEVEL=4
+export CARGO_BUILD_JOBS=4
 cmake -S . -B build
-cmake --build build -j"$(nproc)"
+cmake --build build -j 4
 ```
+
+手动调用 CMake 不会自动应用 `ember` 的并行度策略；以上示例显式限制为 4 个任务。
 
 ### 使用 Makefile 包装
 
@@ -87,9 +106,12 @@ cmake --build build -j"$(nproc)"
 make menuconfig   # 退出后通常会执行 genconfig
 make genconfig
 make update
-make build
-# 或：make all
+CARGO_BUILD_JOBS=4 make build JOBS=4
+# 或：CARGO_BUILD_JOBS=4 make all JOBS=4
 ```
+
+Makefile 的 `JOBS` 与 `ember` 的并行度选择独立；仅设置 `OPENEMBER_JOBS`
+不会改变 `make build` 的任务数。
 
 ## 消息协议依赖
 
@@ -138,7 +160,7 @@ sudo apt install protobuf-compiler libprotobuf-dev
 ## 常见问题
 
 - **Missing `build/.config`**：先运行 `./scripts/ember menuconfig`、`menuconfig.sh`，或使用 `OPENEMBER_KCONFIG_NONINTERACTIVE=1` 生成默认配置。  
-- **编译时内存吃紧 / 终端异常退出**：默认 `-j$(nproc)` 并行度可能过高；请设置更小的 `OPENEMBER_JOBS` 后重试。  
+- **编译时内存吃紧 / 终端异常退出**：即使新版 CLI 默认最多 8 个任务，仍可能超过当前可用内存；可用 `./scripts/ember build -j 2` 重试。若已单独设置 `CARGO_BUILD_JOBS`，也需相应降低；手动 CMake/Makefile 构建请分别调整 `-j` / `JOBS`。
 - **权限**：若运行脚本报权限问题，请用 `bash scripts/...` 显式调用；**不要用 root/`sudo` 编译**，否则 `build/` 产物属主异常、可执行位可能丢失。  
 - **`Permission denied` 运行 `build/bin/...`**：检查文件是否为空、是否缺少可执行位（`ls -l`），以及 `build/` 是否被 root 拥有。
 

@@ -44,15 +44,32 @@ Common subcommands:
 | `./scripts/ember menuconfig [build_dir]` | Interactive Kconfig → `.config` + refresh `config.cmake` |
 | `./scripts/ember genconfig [build_dir]` | Rewrite `config.cmake` from `.config` |
 | `./scripts/ember update [build_dir]` | `cmake -S . -B <dir>` (alias: `configure`) |
-| `./scripts/ember build [build_dir]` | Bootstrap config if needed, then full build |
-| `./scripts/ember all [build_dir]` | menuconfig + update + build |
+| `./scripts/ember build [build_dir] [-j N]` | Bootstrap config if needed, then full build; also accepts `--jobs N` |
+| `./scripts/ember all [build_dir] [-j N]` | menuconfig + update + build; also accepts `--jobs N` |
 | `./scripts/ember clean [build_dir]` | Remove the build directory |
 
-Parallelism is controlled by **`OPENEMBER_JOBS`** (default: **`nproc`**). On machines with many cores and large link steps, lower it:
+### Parallel build jobs
+
+`build` / `all` default to **half the available logical CPUs, rounded down, with
+a minimum of 1 and a maximum of 8 jobs**. For example, 32 logical CPUs default to
+8 jobs. Precedence is **`-j` / `--jobs` > `OPENEMBER_JOBS` > automatic default**:
 
 ```bash
+./scripts/ember build -j 4
+./scripts/ember all --jobs=4
 OPENEMBER_JOBS=4 ./scripts/ember build
+# Lower Rust/Cargo parallelism separately if needed
+CARGO_BUILD_JOBS=2 ./scripts/ember build -j 4
 ```
+
+Cargo follows the selected count unless `CARGO_BUILD_JOBS` is explicitly set.
+Nested CMake builds inherit `CMAKE_BUILD_PARALLEL_LEVEL`. Explicit counts may exceed
+the default cap of 8, but must be positive integers; zero, negative numbers, and
+non-integers are rejected before building.
+
+These are per-tool job limits, not a process-tree-wide CPU quota or a product
+Kconfig setting. See [CLI parallel build jobs](./cli-ember.md#parallel-build-jobs)
+for all option forms, log examples, and older CLI behavior.
 
 See [ember CLI](./cli-ember.md) for install, env management (`ember add` / `use`), and the full command set.
 
@@ -67,9 +84,14 @@ bash scripts/kconfig/menuconfig.sh build
 
 bash scripts/kconfig/genconfig.sh build
 
+export CMAKE_BUILD_PARALLEL_LEVEL=4
+export CARGO_BUILD_JOBS=4
 cmake -S . -B build
-cmake --build build -j"$(nproc)"
+cmake --build build -j 4
 ```
+
+Manual CMake commands do not automatically apply the `ember` parallelism policy;
+the example above explicitly selects 4 jobs.
 
 ### Makefile helpers
 
@@ -77,9 +99,12 @@ cmake --build build -j"$(nproc)"
 make menuconfig
 make genconfig
 make update
-make build
-# or: make all
+CARGO_BUILD_JOBS=4 make build JOBS=4
+# or: CARGO_BUILD_JOBS=4 make all JOBS=4
 ```
+
+The Makefile's `JOBS` setting is independent of `ember`; setting `OPENEMBER_JOBS`
+alone does not change the job count for `make build`.
 
 ## Message protocol dependency
 
@@ -122,7 +147,7 @@ With `OPENEMBER_APP_TURTLE_DEMO` enabled you get the host turtlesim binaries `op
 ## Troubleshooting
 
 - **Missing `build/.config`**: run `./scripts/ember menuconfig`, `menuconfig.sh`, or non-interactive generation first.  
-- **OOM / terminal dies during build**: default `-j$(nproc)` may be too high; set a smaller `OPENEMBER_JOBS`.  
+- **OOM / terminal dies during build**: even the updated CLI's default cap of 8 jobs may exceed available memory; retry with `./scripts/ember build -j 2`. Also lower `CARGO_BUILD_JOBS` if you set it separately. For manual CMake/Makefile builds, adjust `-j` / `JOBS` respectively.
 - **Script permission issues**: invoke with `bash scripts/...`; **do not build as root/`sudo`**.  
 - **`Permission denied` on `build/bin/...`**: check for empty files, missing execute bits (`ls -l`), and whether `build/` is owned by root.
 
