@@ -19,6 +19,34 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
 
+  clientModules: ['./src/clientModules/baiduAnalytics.ts'],
+
+  plugins: [
+    function baiduTongji() {
+      return {
+        name: 'baidu-tongji',
+        injectHtmlTags() {
+          return {
+            headTags: [
+              {
+                tagName: 'script',
+                innerHTML: `
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4e33215b17ef0a7d25da5ab1efef0c0e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+`,
+              },
+            ],
+          };
+        },
+      };
+    },
+  ],
+
   i18n: {
     defaultLocale: 'zh-Hans',
     locales: ['zh-Hans', 'en'],
