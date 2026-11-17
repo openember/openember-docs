@@ -1,20 +1,33 @@
+/* ========== Light：暖琥珀日间光 ========== */
 .heroBanner {
-  --oe-hero-ink: #f8f1e8;
-  --oe-hero-muted: rgba(248, 241, 232, 0.78);
-  --oe-hero-amber: #f0a45a;
+  --oe-hero-ink: #1a1410;
+  --oe-hero-muted: rgba(26, 20, 16, 0.72);
+  --oe-hero-amber: #c2410c;
   --oe-hero-ember: #e07030;
+  --oe-hero-grid: rgba(26, 20, 16, 0.055);
+  --oe-hero-mark-bg: rgba(194, 65, 12, 0.06);
+  --oe-hero-mark-border: rgba(194, 65, 12, 0.22);
+  --oe-hero-mark-ring: rgba(194, 65, 12, 0.08);
+  --oe-hero-decor: rgba(26, 20, 16, 0.48);
+  --oe-hero-cta-primary-bg: #c2410c;
+  --oe-hero-cta-primary-fg: #fff8f2;
+  --oe-hero-cta-primary-hover: #a33609;
+  --oe-hero-cta-secondary-border: rgba(26, 20, 16, 0.22);
+  --oe-hero-cta-secondary-hover-bg: rgba(194, 65, 12, 0.08);
+  --oe-hero-cta-shadow: 0 8px 22px rgba(194, 65, 12, 0.22);
 
   position: relative;
   overflow: hidden;
   text-align: center;
   color: var(--oe-hero-ink);
   background:
-    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(224, 112, 48, 0.45), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 85% 80%, rgba(180, 70, 20, 0.22), transparent 50%),
-    linear-gradient(165deg, #1a1410 0%, #2a1c14 42%, #1c1612 100%);
+    radial-gradient(ellipse 95% 75% at 50% -15%, rgba(224, 112, 48, 0.32), transparent 58%),
+    radial-gradient(ellipse 45% 40% at 90% 85%, rgba(255, 170, 90, 0.22), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 8% 70%, rgba(255, 200, 140, 0.18), transparent 50%),
+    linear-gradient(165deg, #fff9f4 0%, #ffe9d6 48%, #fff3e8 100%);
   padding: 5rem 1.5rem 3.25rem;
   min-height: min(52vh, 520px);
-  border-bottom: 1px solid rgba(240, 164, 90, 0.18);
+  border-bottom: 1px solid rgba(194, 65, 12, 0.14);
 }
 
 .heroBanner::before {
@@ -22,10 +35,10 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 1;
   background-image:
-    linear-gradient(rgba(248, 241, 232, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(248, 241, 232, 0.04) 1px, transparent 1px);
+    linear-gradient(var(--oe-hero-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--oe-hero-grid) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
 }
@@ -39,6 +52,35 @@
   height: 55%;
   transform: translateX(-50%);
   pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(224, 112, 48, 0.16), transparent 70%);
+}
+
+/* ========== Dark：炭黑 + 余烬高光 ========== */
+:global([data-theme='dark']) .heroBanner {
+  --oe-hero-ink: #f8f1e8;
+  --oe-hero-muted: rgba(248, 241, 232, 0.78);
+  --oe-hero-amber: #f0a45a;
+  --oe-hero-ember: #e07030;
+  --oe-hero-grid: rgba(248, 241, 232, 0.045);
+  --oe-hero-mark-bg: rgba(255, 255, 255, 0.06);
+  --oe-hero-mark-border: rgba(240, 164, 90, 0.28);
+  --oe-hero-mark-ring: rgba(224, 112, 48, 0.08);
+  --oe-hero-decor: rgba(248, 241, 232, 0.72);
+  --oe-hero-cta-primary-bg: #f4ebe0;
+  --oe-hero-cta-primary-fg: #1a1410;
+  --oe-hero-cta-primary-hover: #fff;
+  --oe-hero-cta-secondary-border: rgba(248, 241, 232, 0.35);
+  --oe-hero-cta-secondary-hover-bg: rgba(240, 164, 90, 0.12);
+  --oe-hero-cta-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(224, 112, 48, 0.45), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 85% 80%, rgba(180, 70, 20, 0.22), transparent 50%),
+    linear-gradient(165deg, #1a1410 0%, #2a1c14 42%, #1c1612 100%);
+  border-bottom-color: rgba(240, 164, 90, 0.18);
+}
+
+:global([data-theme='dark']) .heroBanner::after {
   background: radial-gradient(ellipse at center, rgba(224, 112, 48, 0.2), transparent 70%);
 }
 
@@ -83,9 +125,9 @@
   height: 4.5rem;
   margin-bottom: 0.25rem;
   border-radius: 1.1rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(240, 164, 90, 0.28);
-  box-shadow: 0 0 0 6px rgba(224, 112, 48, 0.08);
+  background: var(--oe-hero-mark-bg);
+  border: 1px solid var(--oe-hero-mark-border);
+  box-shadow: 0 0 0 6px var(--oe-hero-mark-ring);
 }
 
 .brandLogo {
@@ -122,25 +164,26 @@
 }
 
 .ctaPrimary {
-  --ifm-button-background-color: #f4ebe0;
-  --ifm-button-border-color: #f4ebe0;
-  --ifm-button-color: #1a1410;
+  --ifm-button-background-color: var(--oe-hero-cta-primary-bg);
+  --ifm-button-border-color: var(--oe-hero-cta-primary-bg);
+  --ifm-button-color: var(--oe-hero-cta-primary-fg);
   font-weight: 650;
   border-radius: 0.55rem;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
 .ctaPrimary:hover {
-  --ifm-button-background-color: #fff;
-  --ifm-button-border-color: #fff;
+  --ifm-button-background-color: var(--oe-hero-cta-primary-hover);
+  --ifm-button-border-color: var(--oe-hero-cta-primary-hover);
+  --ifm-button-color: var(--oe-hero-cta-primary-fg);
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-  color: #1a1410;
+  box-shadow: var(--oe-hero-cta-shadow);
+  color: var(--oe-hero-cta-primary-fg);
 }
 
 .ctaSecondary {
   --ifm-button-background-color: transparent;
-  --ifm-button-border-color: rgba(248, 241, 232, 0.35);
+  --ifm-button-border-color: var(--oe-hero-cta-secondary-border);
   --ifm-button-color: var(--oe-hero-ink);
   border-radius: 0.55rem;
   font-weight: 550;
@@ -149,12 +192,11 @@
 
 .ctaSecondary:hover {
   --ifm-button-border-color: var(--oe-hero-amber);
-  --ifm-button-background-color: rgba(240, 164, 90, 0.12);
+  --ifm-button-background-color: var(--oe-hero-cta-secondary-hover-bg);
   color: var(--oe-hero-ink);
   transform: translateY(-1px);
 }
 
-/* 标题 + 按钮下方的场景图标（芯片 / 机器人 / 车载 / Pi 等） */
 .heroDecor {
   display: flex;
   flex-wrap: wrap;
@@ -163,7 +205,7 @@
   gap: 1.6rem 1.85rem;
   margin-top: 2.35rem;
   padding-top: 0.35rem;
-  color: rgba(248, 241, 232, 0.72);
+  color: var(--oe-hero-decor);
   animation: oeHeroIn 0.85s ease-out 0.12s both;
 }
 
