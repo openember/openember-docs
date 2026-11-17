@@ -1,48 +1,28 @@
 import type {ReactNode} from 'react';
-import {FeatureCard} from './FeatureCard';
-import {homepageFeatureIconPath} from './featureIcons';
+import {FeatureCard, type FeatureCardProps} from './FeatureCard';
 import styles from './styles.module.css';
 
-type FeatureItem = {
-  title: string;
-  imagePath: string;
-  imageAlt: string;
-  description: ReactNode;
-};
-
-const FeatureList: FeatureItem[] = [
+const FeatureList: FeatureCardProps[] = [
   {
     title: 'Distributed middleware runtime',
-    imagePath: homepageFeatureIconPath.distributed,
-    imageAlt: 'Distributed nodes and messaging',
-    description: (
-      <>
-        OpenEmber targets robotics and smart devices with node lifecycles, pub/sub messaging,
-        parameters, and services—modules can run on different boards and still work together.
-      </>
-    ),
+    icon: 'distributed',
+    summary:
+      'Node lifecycle, pub/sub messaging, parameters, and services—modules can run across boards and still work together.',
+    tags: ['Pub/Sub', 'Params', 'Services'],
   },
   {
     title: 'Layered architecture & HAL',
-    imagePath: homepageFeatureIconPath.middleware,
-    imageAlt: 'Layered middleware stack',
-    description: (
-      <>
-        Clear stack from apps down to modules, components, core, and platform—OS abstractions
-        plus UART, GPIO, I2C, and more for portable embedded code.
-      </>
-    ),
+    icon: 'layers',
+    summary:
+      'Application → middleware → components → platform, with UART / GPIO / I2C abstractions for portable embedded code.',
+    tags: ['Layers', 'HAL', 'Portable'],
   },
   {
     title: 'EmberLite & shared tooling',
-    imagePath: homepageFeatureIconPath.buildTool,
-    imageAlt: 'Build tooling',
-    description: (
-      <>
-        EmberLite keeps a pure C runtime for tight footprints; both stacks share the{' '}
-        <code>ember</code> CLI and the Kconfig + CMake workflow.
-      </>
-    ),
+    icon: 'toolchain',
+    summary:
+      'A pure-C EmberLite runtime for tight footprints; both stacks share the ember CLI and Kconfig + CMake workflow.',
+    tags: ['ember CLI', 'Kconfig', 'CMake'],
   },
 ];
 
@@ -50,9 +30,13 @@ export default function HomepageFeaturesEn(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
+        <header className={styles.sectionHeading}>
+          <p className={styles.sectionEyebrow}>Capabilities</p>
+          <h2 className={styles.sectionTitle}>A runtime base for embedded Linux products</h2>
+        </header>
         <div className="row">
-          {FeatureList.map((props, idx) => (
-            <FeatureCard key={idx} {...props} />
+          {FeatureList.map((props) => (
+            <FeatureCard key={props.title} {...props} />
           ))}
         </div>
       </div>

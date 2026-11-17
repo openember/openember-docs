@@ -1,25 +1,110 @@
 .features {
-  display: flex;
-  align-items: center;
-  padding: 4.5rem 0;
   width: 100%;
+  padding: 4.25rem 0 3.5rem;
+}
+
+.sectionHeading {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.sectionEyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.5vw, 1.85rem);
+  letter-spacing: -0.02em;
+}
+
+.featureCol {
+  display: flex;
+  margin-bottom: 1.25rem;
+}
+
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem 1.35rem 1.55rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 45%, var(--ifm-color-emphasis-200));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] .featureCard:hover {
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
 }
 
 .featureIconWrap {
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 200px;
-  /* 图片与列边缘、与下方标题之间的呼吸空间 */
-  padding: 1rem 1.25rem;
-  margin-bottom: 0.75rem;
-  box-sizing: border-box;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: 1.1rem;
+  border-radius: 0.75rem;
+  color: var(--ifm-color-primary);
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 22%, transparent);
 }
 
 .featureIcon {
   display: block;
-  height: 200px;
-  width: 200px;
-  max-width: 100%;
-  object-fit: contain;
+}
+
+.featureTitle {
+  margin: 0 0 0.65rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.featureSummary {
+  margin: 0 0 1rem;
+  flex: 1;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.featureTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.featureTags li {
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ifm-color-emphasis-800);
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .featureTags li {
+  background: var(--ifm-color-emphasis-200);
 }

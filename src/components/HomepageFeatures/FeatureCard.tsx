@@ -1,40 +1,39 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import Heading from '@theme/Heading';
+import {featureIconMap, type FeatureIconKey} from './FeatureIcons';
 import styles from './styles.module.css';
 
 export type FeatureCardProps = {
   title: string;
-  /** Path served from static/, e.g. `/img/foo.png` → `static/img/foo.png`. */
-  imagePath: string;
-  imageAlt: string;
-  description: ReactNode;
+  icon: FeatureIconKey;
+  summary: string;
+  tags: string[];
 };
 
 export function FeatureCard({
   title,
-  imagePath,
-  imageAlt,
-  description,
-}: FeatureCardProps) {
-  const src = useBaseUrl(imagePath);
+  icon,
+  summary,
+  tags,
+}: FeatureCardProps): ReactNode {
+  const Icon = featureIconMap[icon];
   return (
-    <div className={clsx('col col--4')}>
-      <div className={clsx('text--center', styles.featureIconWrap)}>
-        <img
-          className={styles.featureIcon}
-          src={src}
-          alt={imageAlt}
-          width={200}
-          height={200}
-          decoding="async"
-        />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
+    <div className={clsx('col col--4', styles.featureCol)}>
+      <article className={styles.featureCard}>
+        <div className={styles.featureIconWrap} aria-hidden>
+          <Icon className={styles.featureIcon} />
+        </div>
+        <Heading as="h3" className={styles.featureTitle}>
+          {title}
+        </Heading>
+        <p className={styles.featureSummary}>{summary}</p>
+        <ul className={styles.featureTags}>
+          {tags.map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
+      </article>
     </div>
   );
 }

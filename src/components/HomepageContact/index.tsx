@@ -1,14 +1,14 @@
 import type {ReactNode} from 'react';
-import Heading from '@theme/Heading';
+import Link from '@docusaurus/Link';
 import styles from './HomepageContact.module.css';
 
 export type HomepageContactProps = {
   heading: string;
-  /** 引导说明（欢迎语、项目状态等） */
   lead: string;
-  /** 如「微信」/「WeChat」 */
   wechatLabel: string;
   wechatId: string;
+  githubLabel?: string;
+  githubHref?: string;
 };
 
 export function HomepageContact({
@@ -16,20 +16,27 @@ export function HomepageContact({
   lead,
   wechatLabel,
   wechatId,
+  githubLabel = 'GitHub',
+  githubHref = 'https://github.com/openember/openember',
 }: HomepageContactProps): ReactNode {
   return (
     <section className={styles.section} aria-labelledby="homepage-contact-heading">
       <div className="container">
-        <div className={styles.wrap}>
-          <div className={styles.card}>
-            <Heading as="h2" id="homepage-contact-heading" className={styles.heading}>
+        <div className={styles.panel}>
+          <div className={styles.copy}>
+            <h2 id="homepage-contact-heading" className={styles.heading}>
               {heading}
-            </Heading>
+            </h2>
             <p className={styles.lead}>{lead}</p>
-            <div className={styles.wechatBlock}>
-              <span className={styles.wechatLabel}>{wechatLabel}</span>
-              <span className={styles.wechatId}>{wechatId}</span>
+          </div>
+          <div className={styles.actions}>
+            <div className={styles.chip}>
+              <span className={styles.chipLabel}>{wechatLabel}</span>
+              <span className={styles.chipValue}>{wechatId}</span>
             </div>
+            <Link className={styles.github} href={githubHref}>
+              {githubLabel}
+            </Link>
           </div>
         </div>
       </div>

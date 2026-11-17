@@ -1,0 +1,106 @@
+.section {
+  padding: 1rem 0 4rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 2.5rem 3rem;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+@media screen and (max-width: 996px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.title {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.45rem, 2.5vw, 1.85rem);
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin: 0 0 1.25rem;
+  max-width: 34rem;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.cta {
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.cta:hover {
+  text-decoration: underline;
+}
+
+.stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.layer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 0.95rem 1.1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ifm-color-primary) calc(18% - var(--oe-layer-i, 0) * 4%), transparent),
+      transparent 55%
+    ),
+    var(--ifm-background-surface-color);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.layer:hover {
+  transform: translateX(4px);
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 40%, var(--ifm-color-emphasis-200));
+}
+
+.layerIndex {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  opacity: 0.85;
+}
+
+.layerName {
+  display: block;
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: -0.01em;
+  color: var(--ifm-heading-color);
+}
+
+.layerDetail {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ifm-color-emphasis-700);
+}

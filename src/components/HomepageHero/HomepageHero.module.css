@@ -1,61 +1,184 @@
 .heroBanner {
-  text-align: center;
+  --oe-hero-ink: #f8f1e8;
+  --oe-hero-muted: rgba(248, 241, 232, 0.78);
+  --oe-hero-amber: #f0a45a;
+  --oe-hero-ember: #e07030;
+
   position: relative;
   overflow: hidden;
-  /* 更高、更透气 */
-  padding: 4.5rem 1.5rem 2.5rem;
-  min-height: min(42vh, 420px);
+  text-align: center;
+  color: var(--oe-hero-ink);
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(224, 112, 48, 0.45), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 85% 80%, rgba(180, 70, 20, 0.22), transparent 50%),
+    linear-gradient(165deg, #1a1410 0%, #2a1c14 42%, #1c1612 100%);
+  padding: 5rem 1.5rem 3.25rem;
+  min-height: min(52vh, 520px);
+  border-bottom: 1px solid rgba(240, 164, 90, 0.18);
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(248, 241, 232, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248, 241, 232, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
+}
+
+.heroBanner::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -40%;
+  width: 70%;
+  height: 55%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(224, 112, 48, 0.2), transparent 70%);
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 3.5rem 1.25rem 3rem;
+    padding: 3.75rem 1.25rem 2.75rem;
     min-height: auto;
   }
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
 }
 
 .heroContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  max-width: 52rem;
+  gap: 1.25rem;
+  max-width: 44rem;
   margin: 0 auto;
+  animation: oeHeroIn 0.7s ease-out both;
+}
+
+@keyframes oeHeroIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.brandMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: 0.25rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(240, 164, 90, 0.28);
+  box-shadow: 0 0 0 6px rgba(224, 112, 48, 0.08);
+}
+
+.brandLogo {
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: contain;
 }
 
 .heroTitle {
-  margin-bottom: 0;
+  margin: 0;
+  font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--oe-hero-ink);
 }
 
 .heroSubtitle {
-  margin-bottom: 0;
-  line-height: 1.65;
+  margin: 0;
+  max-width: 36rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--oe-hero-muted);
+  font-weight: 400;
 }
 
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-top: 0.25rem;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
-/* 标题 + 按钮下方的点缀图标（叠在主题色背景之上） */
+.ctaPrimary {
+  --ifm-button-background-color: #f4ebe0;
+  --ifm-button-border-color: #f4ebe0;
+  --ifm-button-color: #1a1410;
+  font-weight: 650;
+  border-radius: 0.55rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.ctaPrimary:hover {
+  --ifm-button-background-color: #fff;
+  --ifm-button-border-color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  color: #1a1410;
+}
+
+.ctaSecondary {
+  --ifm-button-background-color: transparent;
+  --ifm-button-border-color: rgba(248, 241, 232, 0.35);
+  --ifm-button-color: var(--oe-hero-ink);
+  border-radius: 0.55rem;
+  font-weight: 550;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.ctaSecondary:hover {
+  --ifm-button-border-color: var(--oe-hero-amber);
+  --ifm-button-background-color: rgba(240, 164, 90, 0.12);
+  color: var(--oe-hero-ink);
+  transform: translateY(-1px);
+}
+
+/* 标题 + 按钮下方的场景图标（芯片 / 机器人 / 车载 / Pi 等） */
 .heroDecor {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 1.75rem 2rem;
-  margin-top: 2.25rem;
-  padding-top: 0.5rem;
-  opacity: 0.55;
+  gap: 1.6rem 1.85rem;
+  margin-top: 2.35rem;
+  padding-top: 0.35rem;
+  color: rgba(248, 241, 232, 0.72);
+  animation: oeHeroIn 0.85s ease-out 0.12s both;
 }
 
 .decorIcon {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.95);
+  opacity: 0.88;
+  transition: opacity 0.18s ease, transform 0.18s ease, color 0.18s ease;
+}
+
+.decorIcon:hover {
+  opacity: 1;
+  color: var(--oe-hero-amber);
+  transform: translateY(-2px);
 }
 
 .decorIcon svg {

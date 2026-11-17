@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Heading from '@theme/Heading';
 import {HeroDecor} from './HeroDecor';
 import styles from './HomepageHero.module.css';
@@ -10,6 +11,8 @@ export type HomepageHeroProps = {
   subtitle: string;
   ctaLabel: string;
   ctaTo: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaTo?: string;
 };
 
 export function HomepageHero({
@@ -17,19 +20,42 @@ export function HomepageHero({
   subtitle,
   ctaLabel,
   ctaTo,
+  secondaryCtaLabel = '架构概览',
+  secondaryCtaTo = '/docs/architecture-overview',
 }: HomepageHeroProps): ReactNode {
+  const logoSrc = useBaseUrl('/img/logo.png');
+
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
+    <header className={styles.heroBanner}>
+      <div className={clsx('container', styles.heroInner)}>
         <div className={styles.heroContent}>
-          <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
+          <div className={styles.brandMark}>
+            <img
+              className={styles.brandLogo}
+              src={logoSrc}
+              alt=""
+              width={44}
+              height={44}
+              decoding="async"
+            />
+          </div>
+          <Heading as="h1" className={styles.heroTitle}>
             {title}
           </Heading>
-          <p className={clsx('hero__subtitle', styles.heroSubtitle)}>{subtitle}</p>
+          <p className={styles.heroSubtitle}>{subtitle}</p>
           <div className={styles.buttons}>
-            <Link className="button button--secondary button--lg" to={ctaTo}>
+            <Link
+              className={clsx('button button--lg', styles.ctaPrimary)}
+              to={ctaTo}>
               {ctaLabel}
             </Link>
+            {secondaryCtaLabel && secondaryCtaTo ? (
+              <Link
+                className={clsx('button button--lg', styles.ctaSecondary)}
+                to={secondaryCtaTo}>
+                {secondaryCtaLabel}
+              </Link>
+            ) : null}
           </div>
         </div>
         <HeroDecor />

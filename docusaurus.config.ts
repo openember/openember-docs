@@ -98,8 +98,9 @@ const config: Config = {
         {to: '/blog', label: '博客', position: 'left'},
         {
           href: 'https://github.com/openember/openember',
-          label: 'GitHub',
           position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
         {
           type: 'localeDropdown',
