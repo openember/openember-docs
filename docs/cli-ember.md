@@ -4,7 +4,9 @@ sidebar_position: 5
 
 # ember CLI 命令行工具
 
-`ember` 来自 **openember-cli** 仓库，用于编排 **Kconfig** 与 **CMake**，本身不绑定某一业务工程；具体工程需在根目录提供 `CMakeLists.txt` 以及 `scripts/kconfig/menuconfig.sh`、`scripts/kconfig/genconfig.sh` 等约定入口。
+OpenEmber 内置 `scripts/ember`，独立 **openember-cli** 仓库也提供 `ember`。两者的功能取决于版本；产品创建和型号工作流优先使用框架内置版本。框架根目录提供 `scripts/kconfig/`，独立产品则通过 `openember/` 依赖访问这些脚本，不需要复制工具链。
+
+创建、构建和扩展产品的完整步骤见 [创建你的第一个产品](./product-quickstart.md)。
 
 ## 在工程根目录使用
 
@@ -12,7 +14,26 @@ sidebar_position: 5
 /path/to/<project>/scripts/ember build
 ```
 
+独立产品根目录使用 `./openember/scripts/ember build --product <model>`；可运行 `./openember/scripts/ember install` 将该版本链接到 PATH。安装会更新用户命令链接与 Bash 补全。
+
 OpenEmber 与 EmberLite 均提供 `scripts/ember` 脚本，具体选项取决于所用版本。
+
+## 产品工程命令
+
+以下为 OpenEmber 内置 CLI 的当前入口；在框架根使用 `./scripts/ember`，在产品根使用 `./openember/scripts/ember`。
+
+| 命令 | 作用 |
+|------|------|
+| `new <name> --model <model>` | 生成独立产品工程，默认软链到框架源码 |
+| `new <name> --no-symlink` | 生成工程后由用户添加框架依赖，例如 submodule |
+| `menuconfig --product <model>` | 选择型号并修改配置 |
+| `genconfig --product <model>` | 非交互生成或刷新型号配置 |
+| `build --product <model> -j 4` | 构建到 `build/<model>/` |
+| `run --product <model> --dry-run` | 展示 launch 启动命令，不启动进程 |
+| `run --product <model>` | 通过 launch_manager 启动型号配置 |
+| `defconfig --product <model>` | 重置型号工作配置，备份 `.config.pre-defconfig` |
+
+`new` 还支持 `--path DIR`、`--openember PATH`；以 `ember help` 和 `ember new --help` 为准。`--product` 是型号名称，不是产品仓路径。修改配置后需要重新构建；后续省略 `--product` 时会复用已选型号。
 
 ## 环境变量
 

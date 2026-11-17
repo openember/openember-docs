@@ -61,4 +61,4 @@ Default recommendation: **chassis + encoders + IMU + 2D lidar + SBC**. Phasing a
 
 Turtle is the minimal messaging loop; Rover is the **product-shaped mobile base** on the same middleware. Newcomers should run [Turtle Demo](./turtle-demo.md) first.
 
-See [Architecture overview](./architecture-overview.md) and [OpenEmber Link](./openember-link.md).
+See [Architecture overview](./architecture-overview.md) and [OpenEmber Link](./openember-link).

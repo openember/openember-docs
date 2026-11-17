@@ -5,7 +5,7 @@ sidebar_position: 3.7
 # Agri Station Demo（智慧农业监测站）
 
 :::info 规划中
-第三档产品 Demo：**温室 / 田边 Linux 边缘监测站**。应用拟由 `smart_device_demo` 演进为 `apps/agri_station_demo`。设计见 openember `docs/design/agri-station-demo.md`。
+第三档产品 Demo：**温室 / 田边 Linux 边缘监测站**。产品代码应在独立 `openember-demo-agri-station` 工程维护，主仓 `smart_device_demo` 保留为最小入口参考。设计见 openember `docs/design/agri-station-demo.md`。
 :::
 
 OpenEmber 面向 Linux 多节点运行时，适合**常驻边缘站**，不适合做成智能手表一类 MCU 产品。本 Demo 用**智慧农业**把故事落在棚内/田间监测：多传感、阈值告警、配置与运维面，而不是袖珍消费电子。

@@ -15,7 +15,7 @@ Application 在逻辑上是一层；仓库里按职责拆成多个顶层目录�
 
 | 目录 | 角色 |
 |------|------|
-| `apps/` | 产品或用户项目入口（框架自带节点不放这里；`turtle_demo` 见 [Turtle Demo](./turtle-demo.md)；规划中的巡游小车 / 智慧农业站见 [Rover Demo](./rover-demo.md)、[Agri Station Demo](./agri-station-demo.md)；现有 `smart_device_demo` 将演进为农业站） |
+| `apps/` | 产品或用户项目入口（框架自带节点不放这里；`turtle_demo` 见 [Turtle Demo](./turtle-demo.md)；规划中的巡游小车 / 智慧农业站见 [Rover Demo](./rover-demo.md)、[Agri Station Demo](./agri-station-demo.md)；`smart_device_demo` 保留为最小产品入口参考） |
 | `system/` | OpenEmber 自带、偏必需的系统节点 |
 | `services/` | 可选 runtime 服务 |
 | `examples/` | 示例与参考实现 |
@@ -38,6 +38,12 @@ Tests
 其中 `Application Layer` 聚合 `apps/`、`system/`、`services/`、`examples/`、`tools/`。
 `Middleware Layer` 聚合通信与核心运行时配置，例如 `Communication`、`Core Runtime`。
 
+## 产品工程与框架的边界
+
+可以直接在 OpenEmber 源码树中开发，也可以由独立产品仓拥有顶层 CMake、Kconfig、应用、服务与型号配置，通过 `add_subdirectory(openember)` 引用框架。独立模式下，上表目录描述框架仓本身，产品拥有自己的 `apps/`、`packages/`、`modules/` 和 `products/`。依赖方向为产品 → 框架公开接口，框架不依赖某个产品的驱动或业务。
+
+选择方式与操作步骤见 [创建你的第一个产品](./product-quickstart.md)。
+
 ## 依赖方向
 
 ```
@@ -46,8 +52,6 @@ Application（apps / system / services / examples / tools）
 middleware（communication / core）
   ↓
 components
-  ↓
-core
   ↓
 platform
   ↓

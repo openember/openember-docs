@@ -9,7 +9,7 @@ sidebar_position: 1
 核心特点：
 
 - **分布式架构**：与 ROS2 类似，节点之间可通过“发布-订阅”等方式通信，模块可部署在不同硬件（含异构多核）上。
-- **分层设计**：应用 → 模块 → 组件 → 核心 → 平台（OS 抽象 + HAL），便于裁剪与扩展。
+- **分层设计**：应用 → 中间件（通信与核心运行时）→ 组件 → 平台（OS 抽象与 I/O），便于裁剪与扩展。
 - **构建体系**：Kconfig + CMake + FetchContent，支持第三方依赖的 FETCH / VENDOR / SYSTEM 等策略。
 - **语言策略**：以现代 C++ 为主线实现核心能力，并通过稳定的 C ABI 边界提供有针对性的 C 接入能力。
 
@@ -19,13 +19,15 @@ sidebar_position: 1
 
 ## ember 工具链
 
-**openember-cli** 仓库提供独立的 **`ember`** 命令行工具，供 OpenEmber、EmberLite 等工程共用。它负责调用各工程内的 **Kconfig / CMake 入口脚本**，实现 `menuconfig`、`genconfig`、`build` 等统一工作流；具体功能开关由各仓库的 `Kconfig` 与 `CMakeLists.txt` 决定。
+OpenEmber 仓库内置 `scripts/ember`；**openember-cli** 仓库也提供独立的 **`ember`** 命令行工具，供 OpenEmber、EmberLite 等工程共用。它负责调用各工程内的 **Kconfig / CMake 入口脚本**，实现 `menuconfig`、`genconfig`、`build` 等统一工作流；具体功能开关由各仓库的 `Kconfig` 与 `CMakeLists.txt` 决定。
 
 典型用法是在**工程根目录**执行：
 
 ```bash
 ./scripts/ember build
 ```
+
+独立产品工程使用 `./openember/scripts/ember`。产品创建和多型号工作流请优先使用所依赖框架的内置 CLI，旧版独立 CLI 可能不支持。
 
 详细构建步骤见 [构建 OpenEmber](./build-openember.md) 与 [构建 EmberLite](./build-emberlite.md)，命令说明见 [ember CLI](./cli-ember.md)。
 
@@ -42,6 +44,7 @@ sidebar_position: 1
 ## 下一步
 
 - 了解分层结构：[架构概览](./architecture-overview.md)
+- 创建自己的工程：[创建你的第一个产品](./product-quickstart.md)
 - 构建主仓库：[构建 OpenEmber](./build-openember.md)
 - 宿主机跑通小乌龟：[Turtle Demo](./turtle-demo.md)
 - 巡游小车（规划中）：[Rover Demo](./rover-demo.md)

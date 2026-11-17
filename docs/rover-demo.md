@@ -5,7 +5,7 @@ sidebar_position: 3.6
 # Rover Demo（巡游小车）
 
 :::info 规划中
-本页描述 **计划中的** 第二档产品 Demo：差速巡游小车。应用目录拟为 `apps/rover_demo`，设计细节见 openember 仓库 `docs/design/rover-demo.md`。代码与 launch 落地后，将在此补充构建与运行步骤。
+本页描述 **计划中的** 第二档产品 Demo：差速巡游小车。产品代码应在独立 `openember-demo-rover` 工程维护，设计细节见 openember 仓库 `docs/design/rover-demo.md`。代码与 launch 落地后，将在此补充构建与运行步骤。
 :::
 
 `rover_demo` 面向 **可仿真、可 DIY 真机** 的完整移动机器人故事：在 Turtle Demo 的 Link / 消息 / launch 基础上，增加执行与安全、里程计、可选激光测距，并与 `system/`、`services/`（含 Hardware Interface、web_console 等）共用同一套中间能力。
@@ -20,7 +20,7 @@ sidebar_position: 3.6
 | **Rover Demo** | 差速底盘 + 传感 + 急停/失联保护，仿真与真机同一话题契约 |
 | [Agri Station Demo](./agri-station-demo.md)（规划中） | 智慧农业监测站：弱实时传感、告警/降级、运维面 |
 
-同一 OpenEmber 工程通过 Kconfig 与不同 `*.launch.yaml` 打出不同产品软件包；**不按产品复制** system / services。
+独立产品工程通过 Kconfig 与 `products/<model>/launch.yaml` 管理型号和运行拓扑，复用框架的 system / services。工程起步见 [创建你的第一个产品](./product-quickstart.md)。
 
 ## 命名
 

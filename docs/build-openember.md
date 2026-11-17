@@ -6,6 +6,8 @@ sidebar_position: 3
 
 OpenEmber 使用 **Kconfig** 生成 `build/.config`，再经脚本生成 `build/config.cmake`，由 **CMake** 读取并完成编译。推荐在 Linux 上使用 GCC/G++，CMake 版本需满足仓库要求（当前最小版本以仓库 `CMakeLists.txt` 为准）。
 
+本文说明框架仓的构建；独立产品的创建、`build/<model>/` 产物和运行流程见 [创建你的第一个产品](./product-quickstart.md)。
+
 ## 前置条件
 
 - Linux  

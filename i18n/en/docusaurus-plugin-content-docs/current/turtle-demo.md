@@ -124,4 +124,4 @@ configs/turtle.launch.yaml
 - **[Rover Demo](./rover-demo.md)** (planned): diff-drive rover (sim + DIY within ¥3000)—actuation, sensing, safety.
 - **[Agri Station Demo](./agri-station-demo.md)** (planned): greenhouse/field multi-sensor + alerts/degrade + ops UI.
 
-See [OpenEmber Link](./openember-link.md) and [Architecture overview](./architecture-overview.md).
+See [OpenEmber Link](./openember-link) and [Architecture overview](./architecture-overview.md).
