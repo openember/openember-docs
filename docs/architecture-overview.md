@@ -42,6 +42,8 @@ Tests
 
 可以直接在 OpenEmber 源码树中开发，也可以由独立产品仓拥有顶层 CMake、Kconfig、应用、服务与型号配置，通过 `add_subdirectory(openember)` 引用框架。独立模式下，上表目录描述框架仓本身，产品拥有自己的 `apps/`、`packages/`、`modules/` 和 `products/`。依赖方向为产品 → 框架公开接口，框架不依赖某个产品的驱动或业务。
 
+第三种规划模式为安装 SDK 后开发：产品通过 `find_package(OpenEmber)` 使用已安装的公共头文件和库，独立构建，无需嵌入框架源码。当前继续推荐软链加源码一起编译；SDK 安装与导出能力暂不实施。
+
 选择方式与操作步骤见 [创建你的第一个产品](./product-quickstart.md)。
 
 ## 依赖方向

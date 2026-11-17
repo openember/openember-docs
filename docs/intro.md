@@ -13,6 +13,12 @@ sidebar_position: 1
 - **构建体系**：Kconfig + CMake + FetchContent，支持第三方依赖的 FETCH / VENDOR / SYSTEM 等策略。
 - **语言策略**：以现代 C++ 为主线实现核心能力，并通过稳定的 C ABI 边界提供有针对性的 C 接入能力。
 
+## 工程开发方式
+
+当前可以直接以 OpenEmber 源码为起点维护自己的工程，也可以由独立产品通过软链引入框架源码、一起编译；现阶段推荐后者。第三种模式是安装 OpenEmber SDK 后，链接库与头文件独立开发节点或产品，作为后续规划，暂不实施。
+
+三种模式的选择、当前可用步骤与 SDK 规划见 [创建你的第一个产品](./product-quickstart.md)。
+
 ## EmberLite
 
 **EmberLite** 是与 OpenEmber 相似的纯 C 语言实现的轻量级框架，面向资源更受限的嵌入式 Linux 场景，同样支持多节点与发布-订阅式消息，但运行时与依赖更精简，适合工业控制、高确定性或需符合 MISRA 等规范（虽然我们并不保证）的项目。

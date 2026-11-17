@@ -4,23 +4,25 @@ sidebar_position: 2.5
 
 # 创建你的第一个产品
 
-OpenEmber 支持两种工程使用方式：直接以框架源码为起点开发，或创建独立产品工程并引用框架。两种方式都可以添加自己的应用、服务和驱动。
+OpenEmber 的工程使用方式分为三种：直接维护框架源码、独立产品引用框架源码并一起编译，以及规划中的安装 SDK 后独立开发。前两种已有工程入口，第三种用于后续 SDK 交付。
 
 本文使用 OpenEmber 仓库内置的 `scripts/ember`，命令以当前脚手架实现为准。先准备 [构建依赖](./build-openember)，包括 Linux、C/C++ 编译器、CMake、Protobuf；从源码构建 Zenoh 还需要 Rust/Cargo。首次构建可能下载依赖。
 
 ## 选择工程方式
 
-| | 方式一：直接维护框架源码 | 方式二：独立产品工程 |
-|---|---|---|
-| 工程根 | 复制或 fork 后的 OpenEmber | 自己的产品仓 |
-| 框架源码 | 属于自己的工程，可直接修改 | 作为依赖，通过软链或 submodule 引入 |
-| 产品代码 | 在源码树中添加应用、服务和模块 | 放在产品仓的 `apps/`、`packages/`、`modules/` |
-| 框架升级 | 自己合并上游变更、处理冲突 | 更新依赖版本，再验证产品 |
-| 适用场景 | 深度定制、学习、整体源码交付 | 长期维护产品、多型号开发、持续升级框架 |
+| | 方式一：直接维护框架源码 | 方式二：产品源码集成 | 方式三：安装 SDK 后开发 |
+|---|---|---|---|
+| 当前状态 | 已有入口 | 已有入口，当前推荐 | 规划中，暂不实施 |
+| 工程根 | 复制或 fork 后的 OpenEmber | 自己的产品仓 | 自己的节点或产品仓 |
+| 框架接入 | 源码属于自己的工程，可直接修改 | 通过软链或 submodule 引入源码 | 安装框架库、头文件和 CMake 配置 |
+| 构建方式 | 框架与业务一起编译 | 产品通过 `add_subdirectory(openember)` 一起编译 | 使用 `find_package(OpenEmber)`，独立编译业务 |
+| 产品代码 | 在源码树中添加应用、服务和模块 | 放在产品仓的 `apps/`、`packages/`、`modules/` | 放在自己的工程，通过公开接口链接 SDK |
+| 框架升级 | 自己合并上游变更、处理冲突 | 更新依赖源码版本，再验证产品 | 更新已安装 SDK，检查兼容性并验证产品 |
+| 适用场景 | 深度定制、学习、整体源码交付 | 当前产品开发、多型号开发、框架联调 | 后续多产品共享 SDK、独立节点开发和二进制交付 |
 
-独立产品工程是推荐起点。两种方式均由产品团队维护自己的业务代码；脚手架生成后不会自动更新这些文件。
+**当前推荐方式二：在产品工程中通过软链引入 OpenEmber 核心，框架与产品一起编译。** 先完善工程和公开接口，暂不要求将框架制作成独立 SDK。准备固定源码版本或共享工程时，也可以使用 submodule。
 
-当前独立产品采用**框架源码一起编译**的方式。安装 SDK 后使用 `find_package(OpenEmber)`、`ember new --standalone` 和 `ember dist` 属于后续能力，本文不依赖这些入口。
+三种方式均由产品团队维护自己的业务代码；脚手架生成后不会自动更新这些文件。当前 `ember new` 对应方式二；`ember new --standalone` 和 `ember dist` 仍属于后续能力。
 
 ## 方式一：以 OpenEmber 源码为起点
 
@@ -127,6 +129,30 @@ git submodule add https://github.com/openember/openember.git openember
 在 submodule 内检出产品已验证的框架提交，再提交产品仓的 submodule 指针。团队拉取时使用 `git clone --recurse-submodules`。不要只记录一个 revision 文本却继续编译另一份源码。
 
 框架版本以外，还需记录 `openember-msgs`、第三方库、外部 SDK 和工具链版本；消息来源的配置见 [构建 OpenEmber](./build-openember)。更新依赖后重新构建并运行产品测试。
+
+## 方式三：安装 SDK 后独立开发（规划中）
+
+目标是先安装 OpenEmber 核心，再通过已安装的头文件、库和 CMake 配置开发自己的节点应用或产品工程，应用工作区无需嵌入或重新编译框架源码。使用体验类似于 ROS 的安装环境与应用工作区，但这不意味着兼容 ROS，也不要求引入其完整的包管理和构建体系。
+
+以下是目标用法示意，**当前尚未提供完整可用的安装 SDK 工作流**：
+
+```cmake
+cmake_minimum_required(VERSION 3.16)
+project(my_node LANGUAGES CXX)
+
+find_package(OpenEmber CONFIG REQUIRED)
+add_executable(my_node main.cpp)
+target_link_libraries(my_node PRIVATE openember::core)
+```
+
+SDK 应通过导出的 CMake targets 传递公共头文件路径、编译要求和链接依赖，开发者不必手工拼接框架内部路径。产品专用消息与驱动仍由自己的工程维护。
+
+后续交付需要区分：
+
+- **开发 SDK**：公共头文件、库、生成头文件、公共消息绑定、CMake package 配置及必要的传递依赖。
+- **运行时组件**：运行应用需要的库，以及按需安装的 `launch_manager` 和系统服务。节点启动后连接配置好的 runtime/router，安装 SDK 本身不会自动启动它们。
+
+实现这种模式还需完善安装与导出规则、可发现的 `OpenEmberConfig.cmake`、版本与 ABI 兼容约定、依赖版本管理，以及脱离框架源码树的构建运行验证。SDK 还需匹配目标架构和工具链。当前只记录模式与边界，继续使用方式二推进产品工程，不改变现有构建流程。
 
 ## 在独立工程中添加功能
 
