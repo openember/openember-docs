@@ -8,6 +8,8 @@ OpenEmber 使用 **Kconfig** 生成 `build/.config`，再经脚本生成 `build/
 
 本文说明框架仓的构建；独立产品的创建、`build/<model>/` 产物和运行流程见 [创建你的第一个产品](./product-quickstart.md)。
 
+Kconfig 管理构建能力，频繁调试的设备参数使用 YAML；职责边界与读取方式见 [构建配置与运行参数](./configuration)。
+
 ## 前置条件
 
 - Linux  

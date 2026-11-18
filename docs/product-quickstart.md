@@ -218,6 +218,8 @@ openember_add_proto_library(
 
 共用业务代码，按型号维护配置，产物隔离在 `build/<model>/`。显式 `--product` 最容易确认当前操作对象；不传时工具会复用已选择的型号，初始默认值来自 `product.default`。
 
+构建选项与模块运行参数的完整分工见 [构建配置与运行参数](./configuration)。
+
 - **Kconfig** 决定哪些能力参与构建；产品选项使用 `PRODUCT_*` 前缀，可放在 `kconfig/applications.Kconfig`，配置工具会导出为同名 CMake 变量供产品消费。
 - **launch YAML** 决定运行哪些进程、参数和监督策略。
 - **hardware YAML** 由硬件程序解释，决定设备实例及端点配置。
