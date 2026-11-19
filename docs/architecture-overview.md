@@ -64,6 +64,10 @@ platform
 
 组件层常用能力包括日志（[Logging](./openember-logging.md)）、[Algorithm](./openember-algorithm.md)、[Thread Pool](./openember-thread-pool.md) 等；通信层见 [OpenEmber Link](./openember-link.md)。
 
+## 检测与响应的职责
+
+设备反馈检测、行为响应和动作执行分别建模。检测模块报告可解释的状态与事件，产品策略根据当前动作、控制权和能力决定提示、降级、恢复或请求故障锁存；单一倾角、温度或误差阈值不直接绑定所有产品的统一响应。底层能力与授权等独立约束继续执行，详见[检测、响应与恢复](./detection-and-response)。
+
 ## 设计思想（摘要）
 
 - **可扩展**：插件化模块与 Kconfig 裁剪，适配不同产品与算力。
