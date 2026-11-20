@@ -28,6 +28,8 @@ OpenEmber 与 EmberLite 均提供 `scripts/ember` 脚本，具体选项取决于
 | `new <name> --no-symlink` | 生成工程后由用户添加框架依赖，例如 submodule |
 | `menuconfig --product <model>` | 选择型号并修改配置 |
 | `genconfig --product <model>` | 非交互生成或刷新型号配置 |
+| `update --product <model>` | 解析配置并刷新 CMake，不拉取 Git 源码 |
+| `savedefconfig --product <model>` | 将工作配置相对共用基线的差异保存到型号默认文件 |
 | `build --product <model> -j 4` | 构建到 `build/<model>/` |
 | `run --product <model> --dry-run` | 展示 launch 启动命令，不启动进程 |
 | `run --product <model>` | 通过 launch_manager 启动型号配置 |
@@ -41,6 +43,7 @@ OpenEmber 与 EmberLite 均提供 `scripts/ember` 脚本，具体选项取决于
 |------|------|
 | `OPENEMBER_ROOT` | 显式指定工程根目录（优先级最高） |
 | `OPENEMBER_BUILD_DIR` | 默认构建目录名（默认 `build`） |
+| `OPENEMBER_CMAKE_LOCAL` | 本机 CMake 初始缓存；默认工程根 .ember-local.cmake，管理 SDK/工具链路径 |
 | `OPENEMBER_JOBS` | 并行编译任务数；默认取可用逻辑 CPU 数的一半，向下取整，至少 1、最多 8；可被 `-j` / `--jobs` 覆盖 |
 | `CARGO_BUILD_JOBS` | Cargo 专用并行任务数；未设置时跟随所选构建并行度，也可单独覆盖 |
 | `OPENEMBER_KCONFIG_NONINTERACTIVE=1` | menuconfig 以非交互方式生成默认 `.config` |

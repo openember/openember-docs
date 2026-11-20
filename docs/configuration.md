@@ -89,3 +89,11 @@ controller.At("max_effort_nm").Require(effort > 0, "must be positive");
 - 不自动展开环境变量、不执行 include、不合并默认/机型/本机文件。若模块需要资源路径解析，应明确相对基准。
 
 相关工程入口见 [创建你的第一个产品](./product-quickstart)，构建流程见 [构建 OpenEmber](./build-openember)。
+
+## 型号构建的当前实现
+
+产品以 products/型号/product.defconfig 记录默认功能，menuconfig 维护 build/型号/.config，自动生成 config.cmake 后交给 CMake。菜单依赖解析后的 PRODUCT_* 是产品功能的权威来源；已有工作配置不会被更新后的默认片段覆盖。验证后执行 ember savedefconfig 保存相对共用基线的差异，ember defconfig 则反向重置工作配置并备份。
+
+本机 SDK、工具链和依赖源码路径可以写入忽略的 .ember-local.cmake，update/build 每次加载；也可通过 OPENEMBER_CMAKE_LOCAL 选择另一份。依赖源码版本仍由依赖清单及实际源码基线决定。不能依赖旧 CMakeCache.txt 中未被型号配置记录的功能开关。
+
+四足产品已提供 P05W_C0_HW1D0 的完整运控仿真配置，P05/P30/P30W 先提供模型查看能力。具体功能、构建摘要和迁移步骤见产品仓 docs/model-build.md；真实设备入口默认关闭。
