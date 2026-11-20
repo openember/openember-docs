@@ -31,7 +31,7 @@ Kconfig 不适合承担需要频繁调试的逐关节增益、标定或动作轨
 products/DEMO_A/
   product.defconfig
   launch.yaml
-  hardware.yaml
+  device.yaml
   motion-control.yaml
 ```
 
@@ -138,3 +138,11 @@ ember savedefconfig --product DEMO_B
 ### 本机构建环境
 
 本机 SDK、工具链和依赖源码路径可以写入忽略的 `.ember-local.cmake`，`update` / `build` 每次加载；也可通过 `OPENEMBER_CMAKE_LOCAL` 选择另一份。依赖源码版本仍由依赖清单及实际源码基线决定。不能依赖旧 `CMakeCache.txt` 中未被型号配置记录的功能开关。
+
+## 集中组织简单外设
+
+产品可以把 IMU 等简单外设集中到一个 `device.yaml`，由 HI 在节点启动时读取。当前 HI 支持 `schema_version: 1`、`robot_id` 和按实例名索引的 `devices` 映射；每个实例声明 `type`、`driver`、`enabled`、`mode`、`frame_id`、`topic` 和 `connection`。旧的 `hardware_interface/endpoints` 格式继续支持。文件名本身不触发加载，需要显式传给节点的 `--config`。
+
+例如，核心可选 `OPENEMBER_SENSOR_YESENSE` 提供 YIS321 只读驱动；对应实例使用 `type: imu`、`driver: yesense_readonly`、`model: YIS321`、`mode: readonly`，并在 `connection` 指定 `device`、`baud_rate`、`rx_poll_wait_ms`。构建未包含的驱动不能靠 YAML 启用，也不会自动退回 Mock。真实设备配置应由产品显式选择，避免在仿真启动中打开外设。
+
+集中配置不要求所有参数合并成巨型文件。逐关节配置、动作轨迹和策略模型参数仍由各模块分别维护；launch YAML 管进程编排，`device.yaml` 管设备实例与连接。参考系、安装标定和采样时间需要明确定义，填写设备型号或 frame_id 不代表完成这些核验。
