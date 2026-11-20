@@ -37,6 +37,14 @@ OpenEmber 与 EmberLite 均提供 `scripts/ember` 脚本，具体选项取决于
 
 `new` 还支持 `--path DIR`、`--openember PATH`；以 `ember help` 和 `ember new --help` 为准。`--product` 是型号名称，不是产品仓路径。修改配置后需要重新构建；后续省略 `--product` 时会复用已选型号。
 
+## 保存配置：菜单 Save、savedefconfig 与 defconfig
+
+菜单 **Save** 保存完整的工作配置。保留默认文件名并正常退出后，配置写入 `build/<model>/.config`，后续构建使用该文件；选择其他文件名则导出完整副本。菜单顶部的临时路径属于编辑过程，正常退出后由工具写回正式文件。
+
+`ember savedefconfig --product DEMO_A` 将该型号已有工作配置相对于工程公共基线的差异保存到 `products/DEMO_A/product.defconfig`，用于版本管理。`ember defconfig --product DEMO_A` 执行反方向的重置：用公共基线与型号默认配置重新生成工作配置，并将原文件备份为 `.config.pre-defconfig`。
+
+`savedefconfig` 要求型号默认文件和工作配置已存在，不能直接创建未知型号。菜单 Save 另存文件也不会自动注册型号或修改型号标识。新增型号的步骤及完整保存流程见[型号构建配置的保存与恢复](./configuration#型号构建配置的保存与恢复)。
+
 ## 环境变量
 
 | 变量 | 含义 |

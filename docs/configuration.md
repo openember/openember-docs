@@ -28,7 +28,7 @@ Kconfig 不适合承担需要频繁调试的逐关节增益、标定或动作轨
 产品可以按型号组织参数，例如：
 
 ```text
-products/p05w/
+products/DEMO_A/
   product.defconfig
   launch.yaml
   hardware.yaml
@@ -90,10 +90,51 @@ controller.At("max_effort_nm").Require(effort > 0, "must be positive");
 
 相关工程入口见 [创建你的第一个产品](./product-quickstart)，构建流程见 [构建 OpenEmber](./build-openember)。
 
-## 型号构建的当前实现
+## 型号构建配置的保存与恢复
 
-产品以 products/型号/product.defconfig 记录默认功能，menuconfig 维护 build/型号/.config，自动生成 config.cmake 后交给 CMake。菜单依赖解析后的 PRODUCT_* 是产品功能的权威来源；已有工作配置不会被更新后的默认片段覆盖。验证后执行 ember savedefconfig 保存相对共用基线的差异，ember defconfig 则反向重置工作配置并备份。
+同一个产品工程可以包含多个型号。`products/<model>/product.defconfig` 是纳入版本管理的型号默认配置，`build/<model>/.config` 是该型号当前使用的完整构建配置。首次配置时，工具合并工程公共基线 `openember.defconfig`（若存在）与型号默认配置，并解析 Kconfig 默认值及依赖；已有 `.config` 时，`menuconfig` 继续使用它，不会每次重新加载型号默认配置。下文使用 `DEMO_A`、`DEMO_B` 作为示例型号。
 
-本机 SDK、工具链和依赖源码路径可以写入忽略的 .ember-local.cmake，update/build 每次加载；也可通过 OPENEMBER_CMAKE_LOCAL 选择另一份。依赖源码版本仍由依赖清单及实际源码基线决定。不能依赖旧 CMakeCache.txt 中未被型号配置记录的功能开关。
+| 操作 | 读取与保存方向 | 用途 |
+| --- | --- | --- |
+| `ember menuconfig --product DEMO_A` | 打开当前型号工作配置，保存并正常退出后更新 `build/DEMO_A/.config` | 调整本次构建使用的功能 |
+| 菜单 **Save**（保留默认文件名） | 在菜单编辑文件中保存完整配置，正常退出后写回该型号的 `.config` | 保存菜单中的修改 |
+| 菜单 **Save**（指定其他文件名） | 将完整配置另存为指定文件 | 导出配置副本，不自动注册新型号 |
+| `ember savedefconfig --product DEMO_A` | `build/DEMO_A/.config` → `products/DEMO_A/product.defconfig` | 将验证后的选择保存为可提交的型号默认配置 |
+| `ember defconfig --product DEMO_A` | 公共基线 + 型号默认配置 → `build/DEMO_A/.config` | 恢复型号默认配置；已有 `.config` 先备份到 `.config.pre-defconfig` |
 
-四足产品已提供 P05W_C0_HW1D0 的完整运控仿真配置，P05/P30/P30W 先提供模型查看能力。具体功能、构建摘要和迁移步骤见产品仓 docs/model-build.md；真实设备入口默认关闭。
+菜单中的 Save 与 Linux 内核 menuconfig 类似，可以保存完整配置或另存文件。当前封装先在临时目录中编辑，顶部可能显示 `build/<model>/.kconfig.XXXXXX/.config`；保留默认保存路径并正常退出后，工具才会将配置写回正式 `.config` 并刷新 `config.cmake`。不要将临时目录路径作为长期配置位置。另存文件只负责导出，不能替代默认路径的保存，也不会自动更改 `CONFIG_PRODUCT_MODEL`。
+
+`savedefconfig` 保存的是相对于**解析后的工程公共基线**的差异，并保留型号标识；它不是完整 `.config` 的直接复制，也不只是与原始 Kconfig 默认值比较。生成的 `product.defconfig` 用于 Git 提交、其他开发者复现，以及清理构建目录后重新生成配置。它不会创建新的产品工程，不会切换到另一个型号，也不会自动生成启动和硬件配置。
+
+典型操作顺序：
+
+```bash
+ember menuconfig --product DEMO_A
+# 在菜单中调整选项，使用默认文件名 Save，然后正常退出。
+ember build --product DEMO_A
+# 验证通过后，更新版本管理中的型号默认配置。
+ember savedefconfig --product DEMO_A
+```
+
+下次执行 `ember menuconfig --product DEMO_A` 会继续使用现有工作配置；若要用已保存的默认配置重置它，执行 `ember defconfig --product DEMO_A`。重置会替换当前工作配置，不应将其当作普通刷新操作。
+
+### 在现有产品工程中新增型号
+
+当前 CLI 要求型号的 `products/<model>/product.defconfig` 已存在，`savedefconfig --product <model>` 不能直接创建未知型号。可以复制相近型号的默认文件，修改其中的型号标识，再打开菜单调整：
+
+```bash
+mkdir -p products/DEMO_B
+cp products/DEMO_A/product.defconfig products/DEMO_B/product.defconfig
+sed -i 's/^CONFIG_PRODUCT_MODEL=.*/CONFIG_PRODUCT_MODEL="DEMO_B"/' \
+  products/DEMO_B/product.defconfig
+ember menuconfig --product DEMO_B
+ember savedefconfig --product DEMO_B
+```
+
+此时配置读写均属于 `DEMO_B`，默认构建目录为 `build/DEMO_B/`。复制前提是工程已有可参考的 `DEMO_A` 型号；复制后还应检查型号相关的 Kconfig 条件与能力选择。菜单 Save 即使将文件另存到新目录，也不会完成这些适配步骤。
+
+上述步骤只建立构建配置。需要通过 `ember run` 启动时，还应准备该型号的 `launch.yaml`、按需提供 `hardware.yaml` 及各模块运行参数，并校验其中的型号、设备和资源路径。创建全新的产品仓库使用 `ember new <name> --model <model>`，与在已有工程中新增型号是两项不同操作。
+
+### 本机构建环境
+
+本机 SDK、工具链和依赖源码路径可以写入忽略的 `.ember-local.cmake`，`update` / `build` 每次加载；也可通过 `OPENEMBER_CMAKE_LOCAL` 选择另一份。依赖源码版本仍由依赖清单及实际源码基线决定。不能依赖旧 `CMakeCache.txt` 中未被型号配置记录的功能开关。
