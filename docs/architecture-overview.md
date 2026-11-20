@@ -75,3 +75,5 @@ platform
 - **通信抽象**：OpenEmber Link 提供稳定的 Topic、Service、Liveliness 和消息编解码语义，底层传输实现对应用隐藏。
 
 更完整的分层说明见上游 [分层设计文档](https://github.com/openember/openember/blob/main/docs/architecture/layered-architecture-design-guide.md) 与 [Application 层设计指导](https://github.com/openember/openember/blob/main/docs/architecture/application-layer-design-guide.md)；通信层见 [OpenEmber Link](./openember-link.md)。
+
+启动编排、统一 Link router 和整机状态服务的职责与当前边界见[启动编排与整机状态](launch-and-system-state.md)。

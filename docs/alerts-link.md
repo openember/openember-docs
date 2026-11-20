@@ -64,4 +64,4 @@ cmake --build build/quadruped-host --target quadruped_sim_remote openember_alert
 
 工具打印 `ALERT_EVENT` 和周期 `ALERT_STATE`，后者包括条件总数、active、unknown、心跳与派发统计；已观察来源心跳过期时打印 `ALERT_STALE ... state=unknown`。显式连接 router 时，仿真器与工具均添加对应连接参数，工具使用 `--connect`。工具是只读观察入口，不会创建控制权或请求动作。未来整机管理模块应使用类型订阅和上述消费规则，结合任务、动作阶段与其他反馈决定响应。
 
-核心测试覆盖真实 router/client 发布订阅、全部事件类型及元数据、会话移除、离线快照、晚订阅恢复、发布实例重启、有界历史溢出，以及日志派发阻塞时的独立 Link 派发。协议仓库提供 `alerts_wire_contract` 序列化与未知字段测试。四足保留姿态事件、停止、暂停、控制故障等仿真回归；具体行为仍是 report_only，未增加翻身起身或整机状态管理服务。
+核心测试覆盖真实 router/client 发布订阅、全部事件类型及元数据、会话移除、离线快照、晚订阅恢复、发布实例重启、有界历史溢出，以及日志派发阻塞时的独立 Link 派发。协议仓库提供 `alerts_wire_contract` 序列化与未知字段测试。四足保留姿态事件、停止、暂停、控制故障等仿真回归；具体姿态响应仍可保持 report_only，未增加翻身起身动作。新增的只读整机状态聚合服务见[启动编排与整机状态](launch-and-system-state.md)，当前不自动下发处置动作。
