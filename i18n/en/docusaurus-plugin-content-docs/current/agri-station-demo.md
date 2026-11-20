@@ -5,7 +5,7 @@ sidebar_position: 3.7
 # Agri Station Demo
 
 :::info Planned
-Third product demo: a **greenhouse / field Linux edge monitoring station**. Evolves from `smart_device_demo` into `apps/agri_station_demo`. Design: openember `docs/design/agri-station-demo.md`.
+Third product demo: a **greenhouse / field-edge Linux monitoring station**. Product code should live in a separate `openember-demo-agri-station` project. The main repository keeps `smart_device_demo` as a minimal entry-point reference. Design: openember `docs/design/agri-station-demo.md`.
 :::
 
 OpenEmber is a Linux multi-node runtime—a fit for **always-on edge stations**, not MCU smartwatches. This demo uses **smart agriculture** so the product story matches the stack: multi-sensor, thresholds, config, and ops UI.
