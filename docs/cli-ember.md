@@ -30,7 +30,7 @@ OpenEmber 与 EmberLite 均提供 `scripts/ember` 脚本，具体选项取决于
 | `genconfig --product <model>` | 非交互生成或刷新型号配置 |
 | `update --product <model>` | 解析配置并刷新 CMake，不拉取 Git 源码 |
 | `savedefconfig --product <model>` | 将工作配置相对共用基线的差异保存到型号默认文件 |
-| `build --product <model> -j 4` | 构建到 `build/<model>/` |
+| `build --product <model> -j 4` | 构建到 `build/<architecture>/<model>/` |
 | `run --product <model> --dry-run` | 展示 launch 启动命令，不启动进程 |
 | `run --product <model>` | 通过 launch_manager 启动型号配置 |
 | `defconfig --product <model>` | 重置型号工作配置，备份 `.config.pre-defconfig` |
@@ -39,7 +39,7 @@ OpenEmber 与 EmberLite 均提供 `scripts/ember` 脚本，具体选项取决于
 
 ## 保存配置：菜单 Save、savedefconfig 与 defconfig
 
-菜单 **Save** 保存完整的工作配置。保留默认文件名并正常退出后，配置写入 `build/<model>/.config`，后续构建使用该文件；选择其他文件名则导出完整副本。菜单顶部的临时路径属于编辑过程，正常退出后由工具写回正式文件。
+菜单 **Save** 保存完整的工作配置。保留默认文件名并正常退出后，配置写入 `build/<architecture>/<model>/.config`，后续构建使用该文件；选择其他文件名则导出完整副本。菜单顶部的临时路径属于编辑过程，正常退出后由工具写回正式文件。
 
 `ember savedefconfig --product DEMO_A` 将该型号已有工作配置相对于工程公共基线的差异保存到 `products/DEMO_A/product.defconfig`，用于版本管理。`ember defconfig --product DEMO_A` 执行反方向的重置：用公共基线与型号默认配置重新生成工作配置，并将原文件备份为 `.config.pre-defconfig`。
 
@@ -50,7 +50,7 @@ OpenEmber 与 EmberLite 均提供 `scripts/ember` 脚本，具体选项取决于
 | 变量 | 含义 |
 |------|------|
 | `OPENEMBER_ROOT` | 显式指定工程根目录（优先级最高） |
-| `OPENEMBER_BUILD_DIR` | 默认构建目录名（默认 `build`） |
+| `OPENEMBER_BUILD_DIR` | 覆盖自动选择的构建目录 |
 | `OPENEMBER_CMAKE_LOCAL` | 本机 CMake 初始缓存；默认工程根 .ember-local.cmake，管理 SDK/工具链路径 |
 | `OPENEMBER_JOBS` | 并行编译任务数；默认取可用逻辑 CPU 数的一半，向下取整，至少 1、最多 8；可被 `-j` / `--jobs` 覆盖 |
 | `CARGO_BUILD_JOBS` | Cargo 专用并行任务数；未设置时跟随所选构建并行度，也可单独覆盖 |
@@ -133,3 +133,11 @@ ember list
 | `install` / `uninstall` | 将 `ember` 链到 PATH（默认 `~/.local/bin`） |
 
 完整手册见上游 [openember-cli README](https://github.com/openember/openember-cli/blob/main/README.md)。
+
+## 按架构隔离构建目录
+
+原生构建默认使用产品工程的 `build/<architecture>/<model>/`，例如 `build/x86_64/DEMO_A/` 和 `build/aarch64/DEMO_A/`；框架独立构建默认使用 `build/<architecture>/`。架构通过执行机器的 `uname -m` 识别，`amd64` 和 `arm64` 分别规范为 `x86_64` 和 `aarch64`。
+
+最近使用的型号和自定义目录记录在 `build/<architecture>/.ember-active`，适用于通过 NFS 共享源码的开发机与目标板。旧的 `build/.ember-active` 不再自动加载。`--build-dir`、位置参数和 `OPENEMBER_BUILD_DIR` 仍可以指定已有目录，已有目录不会自动搬迁或删除。CMake 构建缓存包含绝对路径，不应通过移动目录来迁移缓存。
+
+目录命名本身不选择编译器，也不保证 ABI 兼容。交叉编译时须显式准备目标工具链，并使用对应的构建目录；默认架构识别目前用于原生构建。不同架构可以在同一个产品工程中维护不同的 `.config`，依赖路径通过各自的 `OPENEMBER_CMAKE_LOCAL` 初始缓存提供。

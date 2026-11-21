@@ -216,7 +216,7 @@ openember_add_proto_library(
 ./openember/scripts/ember run --product robot-a --dry-run
 ```
 
-共用业务代码，按型号维护配置，产物隔离在 `build/<model>/`。显式 `--product` 最容易确认当前操作对象；不传时工具会复用已选择的型号，初始默认值来自 `product.default`。
+共用业务代码，按型号维护配置，产物隔离在 `build/<architecture>/<model>/`。显式 `--product` 最容易确认当前操作对象；不传时工具会复用已选择的型号，初始默认值来自 `product.default`。
 
 构建选项与模块运行参数的完整分工见 [构建配置与运行参数](./configuration)。
 
