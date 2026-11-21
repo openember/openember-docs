@@ -10,8 +10,8 @@
 
 
 <script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?4e33215b17ef0a7d25da5ab1efef0c0e";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><link rel="stylesheet" href="/assets/css/styles.62c096f0.css">
-<script src="/assets/js/runtime~main.4b51101d.js" defer="defer"></script>
-<script src="/assets/js/main.9ee46a3c.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.f749efe0.js" defer="defer"></script>
+<script src="/assets/js/main.68420b12.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -92,7 +92,7 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="管理多个型号">管理多个型号<a href="#管理多个型号" class="hash-link" aria-label="管理多个型号的直接链接" title="管理多个型号的直接链接" translate="no">​</a></h2>
 <p>在 <code>products/</code> 下增加型号目录，每个型号包含自己的 <code>product.defconfig</code>、<code>hardware.yaml</code> 和 <code>launch.yaml</code>，然后选择并构建：</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">./openember/scripts/ember menuconfig </span><span class="token parameter variable" style="color:#36acaa">--product</span><span class="token plain"> robot-a</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">./openember/scripts/ember build </span><span class="token parameter variable" style="color:#36acaa">--product</span><span class="token plain"> robot-a </span><span class="token parameter variable" style="color:#36acaa">-j</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">./openember/scripts/ember run </span><span class="token parameter variable" style="color:#36acaa">--product</span><span class="token plain"> robot-a --dry-run</span><br></span></code></pre></div></div>
-<p>共用业务代码，按型号维护配置，产物隔离在 <code>build/&lt;model&gt;/</code>。显式 <code>--product</code> 最容易确认当前操作对象；不传时工具会复用已选择的型号，初始默认值来自 <code>product.default</code>。</p>
+<p>共用业务代码，按型号维护配置，产物隔离在 <code>build/&lt;architecture&gt;/&lt;model&gt;/</code>。显式 <code>--product</code> 最容易确认当前操作对象；不传时工具会复用已选择的型号，初始默认值来自 <code>product.default</code>。</p>
 <p>构建选项与模块运行参数的完整分工见 <a class="" href="/docs/configuration">构建配置与运行参数</a>。</p>
 <ul>
 <li class=""><strong>Kconfig</strong> 决定哪些能力参与构建；产品选项使用 <code>PRODUCT_*</code> 前缀，可放在 <code>kconfig/applications.Kconfig</code>，配置工具会导出为同名 CMake 变量供产品消费。</li>
