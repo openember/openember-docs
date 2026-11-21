@@ -15,34 +15,37 @@ sidebar_position: 5
 
 ## 当前状态
 
-目前 `openember-msgs` 已定义第一组核心运行时消息：
+`openember-msgs` 以 Protobuf 包版本维护消息定义。各包的字段、枚举与契约摘要见 [消息包说明](./msgs/common.md)；权威定义与完整契约仍以 `openember-msgs` 仓库中的 `.proto` 与 `docs/*-contract.md` 为准。
 
-| 包 | 用途 |
-|----|------|
-| `common/v1` | `Header`、`Status`、`QosProfile`、`Metric`、`BoolStamped` 等通用类型 |
-| `node/v1` | 节点信息、心跳、节点查询、节点注册表快照 |
-| `lifecycle/v1` | 生命周期状态、状态切换命令与事件 |
-| `diagnostics/v1` | 诊断状态与健康信息 |
-| `parameter/v1` | 参数获取、设置和事件通知 |
-| `log/v1` | 结构化日志 |
-| `device/v1` | 设备信息、设备状态、设备查询 |
-| `runtime/v1` | 进程启动、停止和进程事件 |
-| `sensor/v1` | IMU、温度、GNSS 样本与状态；通用标量样本 `ScalarSample` |
-| `actuator/v1` | 关节命令、状态与执行器健康 |
-| `power/v1` | 电池与电源状态 / 控制 |
-| `geometry/v1` | 平面位姿与速度（`Pose2D`、`Twist2D`；见 [Turtle Demo](./turtle-demo.md)） |
-| `host/v1` | 主机资源快照（`HostResourceSnapshot`：CPU / 内存 / 负载 / 磁盘；由 `services/host_monitor` 发布到 `/host/resources`） |
+| 包 | 用途 | 说明 |
+|----|------|------|
+| [`common/v1`](./msgs/common.md) | `Header`、`Status`、`QosProfile`、`Metric`、`BoolStamped` 等 | 跨域共享基础类型 |
+| [`node/v1`](./msgs/node.md) | 节点信息、心跳、查询、注册表快照 | 发现与自省 |
+| [`lifecycle/v1`](./msgs/lifecycle.md) | 生命周期命令、响应与事件 | 节点状态机 |
+| [`diagnostics/v1`](./msgs/diagnostics.md) | 诊断状态与健康报告 | 运维汇总 |
+| [`parameter/v1`](./msgs/parameter.md) | 参数 get / set / event | 运行时配置 |
+| [`log/v1`](./msgs/log.md) | 结构化日志 | 与告警语义分离 |
+| [`device/v1`](./msgs/device.md) | 设备信息、状态与查询 | 设备清单 |
+| [`runtime/v1`](./msgs/runtime.md) | 进程启停与事件 | 启动管理 |
+| [`sensor/v1`](./msgs/sensor.md) | IMU、温度、GNSS、`ScalarSample` | 含 IMU 契约扩展 |
+| [`actuator/v1` · `v2`](./msgs/actuator.md) | 关节命令 / 状态；v2 租约与控制 | v2 有独立控制契约 |
+| [`motion/v1`](./msgs/motion.md) | 高层速度、模式、动作与租约 | 与关节 HI 分离 |
+| [`power/v1`](./msgs/power.md) | 电池 / 电源观测与类型化控制 | 有效性与回执契约 |
+| [`geometry/v1`](./msgs/geometry.md) | `Pose2D`、`Twist2D` | 见 [Turtle Demo](./turtle-demo.md) |
+| [`host/v1`](./msgs/host.md) | `HostResourceSnapshot` | `/host/resources` |
+| [`alerts/v1`](./msgs/alerts.md) | 结构化告警事件与状态 | 见 [告警组件](./alerts.md) |
+| [`system/v1`](./msgs/system.md) | 整机 `SystemState` 观测 | 见 [整机状态](./launch-and-system-state.md) |
 
 ### 通用辅助类型
 
 | 类型 | 包 | 用途 |
 |------|-----|------|
-| `BoolStamped` | `common/v1` | 带 `Header` 的布尔值（如急停、使能开关） |
-| `ScalarSample` | `sensor/v1` | 带 `Header` 的单标量读数：`quantity` + `value` + `unit`（湿度、光照、墒情、CO₂ 等尚未单独立类型时使用） |
+| `BoolStamped` | [`common/v1`](./msgs/common.md) | 带 `Header` 的布尔值（如急停、使能开关） |
+| `ScalarSample` | [`sensor/v1`](./msgs/sensor.md) | 带 `Header` 的单标量：`quantity` + `value` + `unit` |
 
-二者为跨产品复用的通用消息，不绑定某一 Demo。权威定义见 `openember-msgs` 仓库对应 `.proto`。
+二者为跨产品复用的通用消息，不绑定某一 Demo。
 
-OpenEmber 已接入 `openember-msgs` 的 C++ Protobuf 生成目标，默认通过 `FETCH` 拉取 `main` archive，也可显式选择 `LOCAL` 使用本地 checkout。EmberLite 已接入 Nanopb C 生成目标。两个工程都通过 `OPENEMBER_ENABLE_MSGS` 管理消息协议是否启用。
+OpenEmber 已接入 C++ Protobuf 生成目标，默认 `FETCH` `main` archive，也可 `LOCAL` 使用本地 checkout。EmberLite 已接入 Nanopb C 生成目标。两者均通过 `OPENEMBER_ENABLE_MSGS` 开关协议绑定。
 
 ## Kconfig 管理方案
 

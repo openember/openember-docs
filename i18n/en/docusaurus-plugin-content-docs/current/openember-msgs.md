@@ -15,34 +15,37 @@ Core principles:
 
 ## Current status
 
-`openember-msgs` currently defines the first set of core runtime messages:
+`openember-msgs` versions messages by Protobuf package. Per-package fields, enums, and contract summaries are under [Message packages](./msgs/common.md). Authority remains the `.proto` files and `docs/*-contract.md` in the `openember-msgs` repository.
 
-| Package | Purpose |
-|---------|---------|
-| `common/v1` | Shared types such as `Header`, `Status`, `QosProfile`, `Metric`, and `BoolStamped` |
-| `node/v1` | Node info, heartbeat, node queries, and node-registry snapshots |
-| `lifecycle/v1` | Lifecycle state, transition commands, and events |
-| `diagnostics/v1` | Diagnostic status and health |
-| `parameter/v1` | Parameter get, set, and event notification |
-| `log/v1` | Structured logs |
-| `device/v1` | Device info, device status, and device queries |
-| `runtime/v1` | Process start, stop, and process events |
-| `sensor/v1` | IMU, temperature, and GNSS samples and status; generic scalar sample `ScalarSample` |
-| `actuator/v1` | Joint commands, state, and actuator health |
-| `power/v1` | Battery and power status and control |
-| `geometry/v1` | Planar pose and velocity (`Pose2D`, `Twist2D`; see [Turtle Demo](./turtle-demo.md)) |
-| `host/v1` | Host resource snapshot (`HostResourceSnapshot`: CPU / memory / load / disk; published by `services/host_monitor` on `/host/resources`) |
+| Package | Purpose | Notes |
+|---------|---------|-------|
+| [`common/v1`](./msgs/common.md) | `Header`, `Status`, `QosProfile`, `Metric`, `BoolStamped`, and related | Shared foundation types |
+| [`node/v1`](./msgs/node.md) | Node info, heartbeat, queries, registry snapshots | Discovery and introspection |
+| [`lifecycle/v1`](./msgs/lifecycle.md) | Lifecycle commands, responses, and events | Node state machine |
+| [`diagnostics/v1`](./msgs/diagnostics.md) | Diagnostic status and health reports | Ops aggregation |
+| [`parameter/v1`](./msgs/parameter.md) | Parameter get / set / event | Runtime configuration |
+| [`log/v1`](./msgs/log.md) | Structured logs | Separate from alert semantics |
+| [`device/v1`](./msgs/device.md) | Device info, state, and queries | Device inventory |
+| [`runtime/v1`](./msgs/runtime.md) | Process start/stop and events | Launch management |
+| [`sensor/v1`](./msgs/sensor.md) | IMU, temperature, GNSS, `ScalarSample` | Includes IMU contract extension |
+| [`actuator/v1` · `v2`](./msgs/actuator.md) | Joint command / state; v2 lease and control | v2 has a dedicated control contract |
+| [`motion/v1`](./msgs/motion.md) | High-level velocity, modes, actions, and lease | Separate from joint HI |
+| [`power/v1`](./msgs/power.md) | Battery / power observation and typed control | Validity and receipt contract |
+| [`geometry/v1`](./msgs/geometry.md) | `Pose2D`, `Twist2D` | See [Turtle Demo](./turtle-demo.md) |
+| [`host/v1`](./msgs/host.md) | `HostResourceSnapshot` | `/host/resources` |
+| [`alerts/v1`](./msgs/alerts.md) | Structured alert events and state | See [Alerts](./alerts.md) |
+| [`system/v1`](./msgs/system.md) | Whole-robot `SystemState` observation | See [system state](./launch-and-system-state.md) |
 
 ### Shared helper types
 
 | Type | Package | Purpose |
 |------|---------|---------|
-| `BoolStamped` | `common/v1` | Boolean with a `Header` (for example e-stop or an enable switch) |
-| `ScalarSample` | `sensor/v1` | Single scalar reading with a `Header`: `quantity` + `value` + `unit` (humidity, illuminance, soil moisture, CO₂, and similar quantities that do not have a dedicated type yet) |
+| `BoolStamped` | [`common/v1`](./msgs/common.md) | Boolean with a `Header` (for example e-stop or an enable switch) |
+| `ScalarSample` | [`sensor/v1`](./msgs/sensor.md) | Single scalar with a `Header`: `quantity` + `value` + `unit` |
 
-Both are generic messages reused across products. They are not tied to one demo. The authority is the corresponding `.proto` in the `openember-msgs` repository.
+Both are generic messages reused across products. They are not tied to one demo.
 
-OpenEmber already consumes the C++ Protobuf generation target. By default it `FETCH`es a `main` archive, or you can select `LOCAL` and use a local checkout. EmberLite already consumes the Nanopb C generation target. Both projects gate the protocol with `OPENEMBER_ENABLE_MSGS`.
+OpenEmber already consumes the C++ Protobuf generation target (`FETCH` `main` by default, or `LOCAL`). EmberLite already consumes Nanopb C. Both gate the protocol with `OPENEMBER_ENABLE_MSGS`.
 
 ## Kconfig layout
 
