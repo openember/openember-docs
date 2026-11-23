@@ -47,3 +47,5 @@ sidebar_position: 10
 - 首版同机在线控制：`clock_domain=host-monotonic:<boot-id>`。
 - `JointCommand` 必须覆盖能力中全部关节，无 partial update；任一项非法则整条拒绝。
 - CMake 属性 `OPENEMBER_ACTUATOR_CONTRACT_VERSION=2` 只证明消息可生成，不证明 HI 已实现端点。
+
+`JointCapability.hardware_effort_limit_supported` 表示后端能否设置设备侧总力矩上限；缺省为 false。MIT 可以在电机内环执行，`max_effort` 作为目标预算仍参与准入和监测，但没有硬件限幅能力时，前馈限幅、发送前合力矩估计及反馈超限停止不能保证内环瞬时总力矩不超预算。需要硬件总力矩保证的应用须根据该能力选择后端。
