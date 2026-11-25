@@ -8,7 +8,7 @@ OpenEmber 将主机资源监测与网络管理作为可裁剪的公共系统服�
 | 模块 | 职责 |
 | --- | --- |
 | host_monitor | 发布主机运行时间、设备时间、CPU、内存、系统信息等只读事实 |
-| network_manager（规划） | 网络状态查询、授权配置和异步结果；优先适配 Linux NetworkManager D-Bus |
+| network_manager | 已实现接口、地址、链路和累计流量只读快照；可选 NetworkManager D-Bus 配置与异步控制 |
 | launch_manager | 启动、依赖、就绪、存活与退出管理 |
 | alerts | 结构化告警事件与日志 |
 | system_manager | 聚合事实和告警，按产品策略管理整机状态和处置 |
@@ -25,6 +25,14 @@ OpenEmber 将主机资源监测与网络管理作为可裁剪的公共系统服�
 
 通过 `/host/resources` 发布 host/v1/HostResourceSnapshot。host_id、boot_id 和服务实例分别标识主机、系统启动与采集进程启动；接收方使用自己的单调时间检测消息过期和序号停滞。Web 后端只订阅、校验与缓存消息，不直接采集主机指标。
 
-第一阶段已实现主机监测及产品首页接入，支持 x86_64 和 ARM64；网络管理后续先提供只读列表，再加入以太网、Wi-Fi 和热点配置。网络变更需有权限、请求标识、执行结果和配置回读，并区分临时应用与持久化。修改当前管理链路时应支持超时回滚，避免远程配置失败后失联。
+第一阶段已实现主机监测及产品首页接入，支持 x86_64 和 ARM64；网络观测已提供只读列表，已加入可选以太网、Wi-Fi 和热点配置。网络变更需有权限、请求标识、执行结果和配置回读，并区分临时应用与持久化。修改当前管理链路时应支持超时回滚，避免远程配置失败后失联。
 
 完整实现设计见 openember 仓库 `docs/design/host-and-network-services.md`。
+
+网络观测发布 `/network/state`（`network/v1/NetworkStateSnapshot`）。当前 Linux 后端使用有界 rtnetlink 查询，普通用户即可运行，不需要 nmcli，不更改接口和连接；无线接口通过 sysfs 辅助分类。管理启用、载波、运行状态和 IP 地址分别表达，不将 UP 解释为互联网可达。接口与地址采集分别具有有效性标记，采集失败、消息过期和未分配地址不会混同。
+
+四足产品启用 Web 时会构建并编排 network_manager，网络页通过 Link 获取目标主机数据。已有构建先 `ember genconfig --product <model>` 重新解析依赖，再 `ember update` 和构建。服务不参与运动许可。网络配置、Wi-Fi 和热点操作沿用 Web 登录及系统权限，提供异步结果和管理链路回退。
+
+网络管理与观测已实现，见[网络管理](network-monitor.md)。主机与网络服务独立部署，二者通过主机标识限定显示范围。
+
+轻量回退的确认计时器放在 OpenEmber core：`openember::ConfirmedChange`，由具体模块提供确认和恢复动作，不自带线程或权限。网络模块复用它并建立 NetworkManager checkpoint，使进程退出后仍有超时恢复。没有额外控制权租约或设备维护状态。
